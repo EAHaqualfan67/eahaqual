@@ -1723,16 +1723,26 @@
         }
 
         function performSearch() {
-            const target = getTargetUrl(searchInput.value);
-            if (!target) return;
-            navigateViaUV(target);
-        }
+    let input = searchInput.value.trim();
+    if (!input) return;
+    if (!/^https?:\/\//i.test(input) && !input.includes('.')) {
+        input = 'https://google.com' + encodeURIComponent(input);
+    } else if (!/^https?:\/\//i.test(input)) {
+        input = 'https://' + input;
+    }
+    window.location.href = 'https://nowgg.nl' + encodeURIComponent(input);
+}
 
-        function openInNewTab() {
-            const target = getTargetUrl(searchInput.value);
-            if (!target) return;
-            openInNewTabUV(target);
-        }
+function openInNewTab() {
+    let input = searchInput.value.trim();
+    if (!input) return;
+    if (!/^https?:\/\//i.test(input) && !input.includes('.')) {
+        input = 'https://google.com' + encodeURIComponent(input);
+    } else if (!/^https?:\/\//i.test(input)) {
+        input = 'https://' + input;
+    }
+    window.open('https://nowgg.nl' + encodeURIComponent(input), '_blank');
+}
 
         searchGo.addEventListener('click', performSearch);
         searchOpenTab.addEventListener('click', openInNewTab);
