@@ -5,14 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0a0f1c" />
     <title>EAHaqual Unblocked</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet" />
-
-    <!-- ===== ULTRAVIOLET SCRIPTS (from CDN – you can also host them locally) ===== -->
-    <script src="https://cdn.jsdelivr.net/npm/@titaniumnetwork-dev/ultraviolet/dist/uv.bundle.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@titaniumnetwork-dev/ultraviolet/dist/uv.client.js"></script>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://w3.org' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>" />
+    <link rel="preconnect" href="https://googleapis.com" />
+    <link rel="preconnect" href="https://gstatic.com" crossorigin />
+    <link href="https://googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet" />
 
     <style>
         /* === RESET & VARIABLES === */
@@ -284,9 +280,7 @@
         .search-box input { flex:1; padding:12px 16px; border-radius:8px; border:1px solid var(--border-color); background:var(--bg-secondary); color:var(--text-primary); font-size:14px; outline:none; min-width:180px; }
         .search-box input:focus { border-color:var(--accent-cyan); }
         .search-box .btn-amber { background:var(--accent-amber); color:#0a0f1c; }
-        .proxy-info { text-align:center; color:var(--text-muted); margin-top:20px; font-size:14px; }
-        /* Remove iframe – we navigate the page */
-        #searchFrame { display:none; }
+        #searchFrame { width:100%; height:70vh; border:none; border-radius:var(--radius); margin-top:14px; background:var(--bg-secondary); }
 
         /* Responsive */
         @media (max-width:768px) {
@@ -530,21 +524,19 @@
             </div>
         </section>
 
-        <!-- SEARCH (Ultraviolet Proxy) -->
+        <!-- SEARCH (Public Proxy) -->
         <section class="panel" id="panel-search">
             <div class="search-section">
                 <div class="search-header">
                     <h2>🔍 Search the Web</h2>
-                    <p>Enter a URL or search term – it will be routed through your Ultraviolet proxy.</p>
+                    <p>Enter a URL or search term – it will be routed through a public proxy.</p>
                 </div>
                 <div class="search-box">
                     <input type="text" id="searchInput" placeholder="example.com or search term...">
                     <button class="btn-primary" id="searchGo">Go</button>
                     <button class="btn-primary btn-amber" id="searchOpenTab">↗ Open in new tab</button>
                 </div>
-                <div class="proxy-info">
-                    ⚡ Your proxy is active. When you search, the page will navigate to the proxied URL.
-                </div>
+                <iframe id="searchFrame" src="about:blank"></iframe>
             </div>
         </section>
     </main>
@@ -559,7 +551,7 @@
     </div>
 
     <footer class="footer container">
-        <p>EAHaqual Unblocked — powered by Ultraviolet 🚀</p>
+        <p>EAHaqual Unblocked — powered by public proxy 🚀</p>
     </footer>
 
     <!-- ===== IMPORTS ===== -->
@@ -574,7 +566,7 @@
     </script>
 
     <script type="module">
-        // ===== FIREBASE IMPORTS =====
+        // ===== FIREBASE IMPORTS (unchanged) =====
         import { initializeApp } from "firebase/app";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "firebase/auth";
         import {
@@ -628,37 +620,18 @@
 
         // ===== GAMES (unchanged) =====
         const GAMES = [
-            { id: 'roll', title: 'Slope Rolling',
-            url: 'https://html5.gamedistribution.com/0022998ce3c54962be6ffe178229b168/?gd_sdk_referrer_url=https://eahaqual-unblocked.web.app/',
-            img: 'https://www.onlinegames.io/media/posts/961/Slope-Rolling.jpg' },
-            { id: 'bike', title: 'Bike Rush',
-            url: 'https://html5.gamedistribution.com/c23f50871019481f99d1ce3d56571dfd/?gd_sdk_referrer_url=https://eahaqual-unblocked.web.app/',
-            img: 'https://www.onlinegames.io/media/posts/1091/italian-brainrot-bike-rush.webp' },
-            { id: 'boat', title: 'Boat Racing',
-            url: 'https://html5.gamedistribution.com/f4b1cfeb63274fcd9e11df58a55c72ee/?gd_sdk_referrer_url=https://eahaqual-unblocked.web.app/',
-            img: 'https://www.onlinegames.io/media/posts/1359/boat-game-racing-simulator-3d.webp' },
-            { id: 'gta', title: 'Stickman GTA', url: 'https://cloud.onlinegames.io/games/2024/unity3/stickman-gta-city/index-og.html',
-                img: 'https://www.onlinegames.io/media/posts/900/stickman-gta-city-free.jpg' },
-            { id: 'football', title: 'Football Heads',
-            url: 'https://html5.gamedistribution.com/e28358852075425e9d70f65e90a9c34f/?gd_sdk_referrer_url=https://eahaqual-unblocked.web.app/',
-            img: 'https://www.onlinegames.io/media/posts/1362/football-heads-2026.webp' },
-            { id: 'flight', title: 'Flight Sim', url: 'https://cloud.onlinegames.io/games/2023/unity2/real-flight-simulator/index.html',
-                img: 'https://www.onlinegames.io/media/posts/342/Real-Flight-Simulator-2.jpg' },
-            { id: 'clicker', title: '67 Clicker',
-            url: 'https://html5.gamedistribution.com/7fcb55f25f4a4a07848c630dffe1ae6e/?gd_sdk_referrer_url=https://eahaqual-unblocked.web.app/',
-            img: 'https://www.onlinegames.io/media/posts/1351/67-clicker-tap-tap-2.webp' },
-            { id: 'famidash', title: 'FamiDash', url: 'https://cloud.onlinegames.io/games/2026/em/famidash/index.html',
-                img: 'https://www.onlinegames.io/media/posts/1275/famidash.webp' },
-            { id: 'granny', title: 'Granny',
-            url: 'https://playhop.com/app/307198?utm_source=distrib&is-united-page=1&skip-guard=1&header=no&utm_medium=cristian-ovidiu&clid=8531463',
-            img: 'https://www.onlinegames.io/media/posts/884/granny.jpg' },
-            { id: '1v1lol', title: '1v1.LOL', url: 'https://db.duckmath.org/html/1v1lol/',
-                img: 'https://www.onlinegames.io/media/posts/379/1v1.LOL-Online.jpg' },
-            { id: 'freezeria', title: "Papa's Freezeria", url: 'https://www.onlinegames.io/games/2024/flash2/papas-freezeria/',
-                img: 'https://www.onlinegames.io/media/posts/813/Papas-Freezeria.jpg' },
-            { id: 'firewater', title: 'Fireboy & Watergirl',
-            url: 'https://html5.gamedistribution.com/a55c9cc9c21e4fc683c8c6857f3d0c75/?gd_sdk_referrer_url=https://eahaqual-unblocked.web.app/',
-            img: 'https://www.onlinegames.io/media/posts/377/Fireboy-and-Watergirl-Online.jpg' }
+            { id: 'roll', title: 'Slope Rolling', url: 'https://html5.gamedistribution.com/0022998ce3c54962be6ffe178229b168/?gd_sdk_referrer_url=https://eahaqual-unblocked.web.app/', img: 'https://www.onlinegames.io/media/posts/961/Slope-Rolling.jpg' },
+            { id: 'bike', title: 'Bike Rush', url: 'https://html5.gamedistribution.com/c23f50871019481f99d1ce3d56571dfd/?gd_sdk_referrer_url=https://eahaqual-unblocked.web.app/', img: 'https://www.onlinegames.io/media/posts/1091/italian-brainrot-bike-rush.webp' },
+            { id: 'boat', title: 'Boat Racing', url: 'https://html5.gamedistribution.com/f4b1cfeb63274fcd9e11df58a55c72ee/?gd_sdk_referrer_url=https://eahaqual-unblocked.web.app/', img: 'https://www.onlinegames.io/media/posts/1359/boat-game-racing-simulator-3d.webp' },
+            { id: 'gta', title: 'Stickman GTA', url: 'https://cloud.onlinegames.io/games/2024/unity3/stickman-gta-city/index-og.html', img: 'https://www.onlinegames.io/media/posts/900/stickman-gta-city-free.jpg' },
+            { id: 'football', title: 'Football Heads', url: 'https://html5.gamedistribution.com/e28358852075425e9d70f65e90a9c34f/?gd_sdk_referrer_url=https://eahaqual-unblocked.web.app/', img: 'https://www.onlinegames.io/media/posts/1362/football-heads-2026.webp' },
+            { id: 'flight', title: 'Flight Sim', url: 'https://cloud.onlinegames.io/games/2023/unity2/real-flight-simulator/index.html', img: 'https://www.onlinegames.io/media/posts/342/Real-Flight-Simulator-2.jpg' },
+            { id: 'clicker', title: '67 Clicker', url: 'https://html5.gamedistribution.com/7fcb55f25f4a4a07848c630dffe1ae6e/?gd_sdk_referrer_url=https://eahaqual-unblocked.web.app/', img: 'https://www.onlinegames.io/media/posts/1351/67-clicker-tap-tap-2.webp' },
+            { id: 'famidash', title: 'FamiDash', url: 'https://cloud.onlinegames.io/games/2026/em/famidash/index.html', img: 'https://www.onlinegames.io/media/posts/1275/famidash.webp' },
+            { id: 'granny', title: 'Granny', url: 'https://playhop.com/app/307198?utm_source=distrib&is-united-page=1&skip-guard=1&header=no&utm_medium=cristian-ovidiu&clid=8531463', img: 'https://www.onlinegames.io/media/posts/884/granny.jpg' },
+            { id: '1v1lol', title: '1v1.LOL', url: 'https://db.duckmath.org/html/1v1lol/', img: 'https://www.onlinegames.io/media/posts/379/1v1.LOL-Online.jpg' },
+            { id: 'freezeria', title: "Papa's Freezeria", url: 'https://www.onlinegames.io/games/2024/flash2/papas-freezeria/', img: 'https://www.onlinegames.io/media/posts/813/Papas-Freezeria.jpg' },
+            { id: 'firewater', title: 'Fireboy & Watergirl', url: 'https://html5.gamedistribution.com/a55c9cc9c21e4fc683c8c6857f3d0c75/?gd_sdk_referrer_url=https://eahaqual-unblocked.web.app/', img: 'https://www.onlinegames.io/media/posts/377/Fireboy-and-Watergirl-Online.jpg' }
         ];
 
         const gamesGrid = document.getElementById('gamesGrid');
@@ -675,8 +648,7 @@
                 <span class="tile-label">${game.title}</span>
             `;
             tile.addEventListener('click', () => openGame(game.url, game.title));
-            tile.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault();
-                    openGame(game.url, game.title); } });
+            tile.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openGame(game.url, game.title); } });
             gamesGrid.appendChild(tile);
         });
 
@@ -696,8 +668,7 @@
             gamePlayerFrame.src = 'about:blank';
         }
         gamePlayerClose.addEventListener('click', closeGame);
-        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && gamePlayer.classList.contains('open'))
-            closeGame(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && gamePlayer.classList.contains('open')) closeGame(); });
 
         // ===== THEME =====
         const themeToggle = document.getElementById('themeToggle');
@@ -762,8 +733,7 @@
 
         settingsToggle.addEventListener('click', () => settingsOverlay.classList.toggle('open'));
         settingsClose.addEventListener('click', () => settingsOverlay.classList.remove('open'));
-        settingsOverlay.addEventListener('click', (e) => { if (e.target === settingsOverlay) settingsOverlay.classList.remove(
-                'open'); });
+        settingsOverlay.addEventListener('click', (e) => { if (e.target === settingsOverlay) settingsOverlay.classList.remove('open'); });
 
         // ===== HOTKEYS (unchanged) =====
         let hotkeys = JSON.parse(localStorage.getItem('eahaqual_hotkeys') || '[]');
@@ -806,9 +776,7 @@
             if (keyCapture.classList.contains('active')) {
                 e.preventDefault();
                 const key = e.key.length === 1 ? e.key.toUpperCase() : e.key;
-                if (key === 'Escape') { keyCapture.classList.remove('active');
-                    keyCapture.textContent = '🔑';
-                    captureKey = null; return; }
+                if (key === 'Escape') { keyCapture.classList.remove('active'); keyCapture.textContent = '🔑'; captureKey = null; return; }
                 captureKey = key;
                 keyCapture.textContent = key;
                 keyCapture.classList.remove('active');
@@ -816,8 +784,7 @@
             }
             const key = e.key.length === 1 ? e.key.toUpperCase() : e.key;
             const match = hotkeys.find(h => h.key === key);
-            if (match && !e.ctrlKey && !e.metaKey && !e.altKey && e.target.tagName !== 'INPUT' && e.target.tagName !==
-                'TEXTAREA' && e.target.tagName !== 'SELECT') {
+            if (match && !e.ctrlKey && !e.metaKey && !e.altKey && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA' && e.target.tagName !== 'SELECT') {
                 e.preventDefault();
                 window.open(match.url, '_blank');
             }
@@ -925,52 +892,25 @@
                 reader.onload = (ev) => {
                     try {
                         const data = JSON.parse(ev.target.result);
-                        if (data.hotkeys) { hotkeys = data.hotkeys;
-                            localStorage.setItem('eahaqual_hotkeys', JSON.stringify(hotkeys));
-                            renderHotkeys(); }
+                        if (data.hotkeys) { hotkeys = data.hotkeys; localStorage.setItem('eahaqual_hotkeys', JSON.stringify(hotkeys)); renderHotkeys(); }
                         if (data.settings) {
                             const s = data.settings;
-                            if (s.darkMode !== undefined) { darkMode = s.darkMode;
-                                document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
-                                themeToggle.textContent = darkMode ? '🌙' : '☀️'; }
+                            if (s.darkMode !== undefined) { darkMode = s.darkMode; document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light'); themeToggle.textContent = darkMode ? '🌙' : '☀️'; }
                             if (s.emojis !== undefined) document.getElementById('settingEmojis').checked = s.emojis;
-                            if (s.emojiSpeed !== undefined) { document.getElementById('settingEmojiSpeed').value = s
-                                    .emojiSpeed;
-                                document.getElementById('settingEmojiSpeedVal').textContent = s.emojiSpeed;
-                                document.documentElement.style.setProperty('--emoji-speed', s.emojiSpeed); }
-                            if (s.emojiDensity !== undefined) { document.getElementById('settingEmojiDensity').value = s
-                                    .emojiDensity;
-                                document.getElementById('settingEmojiDensityVal').textContent = s.emojiDensity;
-                                document.documentElement.style.setProperty('--emoji-density', s.emojiDensity / 4); }
-                            if (s.repel !== undefined) { document.getElementById('settingRepel').value = s.repel;
-                                document.getElementById('settingRepelVal').textContent = s.repel;
-                                document.documentElement.style.setProperty('--repel-strength', s.repel / 5); }
-                            if (s.animSpeed !== undefined) { document.getElementById('settingAnimSpeed').value = s
-                                    .animSpeed;
-                                document.getElementById('settingAnimSpeedVal').textContent = s.animSpeed;
-                                document.documentElement.style.setProperty('--animation-speed', s.animSpeed); }
-                            if (s.chatFont !== undefined) { document.getElementById('settingChatFont').value = s
-                                    .chatFont;
-                                document.getElementById('settingChatFontVal').textContent = s.chatFont;
-                                document.documentElement.style.setProperty('--chat-font-size', s.chatFont + 'px'); }
-                            if (s.bubbleStyle !== undefined) { document.getElementById('settingBubbleStyle').value = s
-                                    .bubbleStyle;
-                                document.documentElement.style.setProperty('--chat-bubble-radius', s.bubbleStyle +
-                                'px'); }
+                            if (s.emojiSpeed !== undefined) { document.getElementById('settingEmojiSpeed').value = s.emojiSpeed; document.getElementById('settingEmojiSpeedVal').textContent = s.emojiSpeed; document.documentElement.style.setProperty('--emoji-speed', s.emojiSpeed); }
+                            if (s.emojiDensity !== undefined) { document.getElementById('settingEmojiDensity').value = s.emojiDensity; document.getElementById('settingEmojiDensityVal').textContent = s.emojiDensity; document.documentElement.style.setProperty('--emoji-density', s.emojiDensity / 4); }
+                            if (s.repel !== undefined) { document.getElementById('settingRepel').value = s.repel; document.getElementById('settingRepelVal').textContent = s.repel; document.documentElement.style.setProperty('--repel-strength', s.repel / 5); }
+                            if (s.animSpeed !== undefined) { document.getElementById('settingAnimSpeed').value = s.animSpeed; document.getElementById('settingAnimSpeedVal').textContent = s.animSpeed; document.documentElement.style.setProperty('--animation-speed', s.animSpeed); }
+                            if (s.chatFont !== undefined) { document.getElementById('settingChatFont').value = s.chatFont; document.getElementById('settingChatFontVal').textContent = s.chatFont; document.documentElement.style.setProperty('--chat-font-size', s.chatFont + 'px'); }
+                            if (s.bubbleStyle !== undefined) { document.getElementById('settingBubbleStyle').value = s.bubbleStyle; document.documentElement.style.setProperty('--chat-bubble-radius', s.bubbleStyle + 'px'); }
                             if (s.sounds !== undefined) document.getElementById('settingSounds').checked = s.sounds;
                             if (s.notifs !== undefined) document.getElementById('settingNotifs').checked = s.notifs;
-                            if (s.gameQuality !== undefined) document.getElementById('settingGameQuality').value = s
-                                .gameQuality;
-                            if (s.autoLaunch !== undefined) document.getElementById('settingAutoLaunch').checked = s
-                                .autoLaunch;
-                            if (s.onlineStatus !== undefined) document.getElementById('settingOnlineStatus').checked =
-                                s.onlineStatus;
-                            if (s.compact !== undefined) document.getElementById('settingCompact').checked = s
-                                .compact;
-                            if (s.bgColor) { document.getElementById('settingBgColor').value = s.bgColor;
-                                document.documentElement.style.setProperty('--custom-bg', s.bgColor); }
-                            if (s.accentColor) { document.getElementById('settingAccentColor').value = s.accentColor;
-                                document.documentElement.style.setProperty('--custom-accent', s.accentColor); }
+                            if (s.gameQuality !== undefined) document.getElementById('settingGameQuality').value = s.gameQuality;
+                            if (s.autoLaunch !== undefined) document.getElementById('settingAutoLaunch').checked = s.autoLaunch;
+                            if (s.onlineStatus !== undefined) document.getElementById('settingOnlineStatus').checked = s.onlineStatus;
+                            if (s.compact !== undefined) document.getElementById('settingCompact').checked = s.compact;
+                            if (s.bgColor) { document.getElementById('settingBgColor').value = s.bgColor; document.documentElement.style.setProperty('--custom-bg', s.bgColor); }
+                            if (s.accentColor) { document.getElementById('settingAccentColor').value = s.accentColor; document.documentElement.style.setProperty('--custom-accent', s.accentColor); }
                         }
                         alert('Settings imported successfully!');
                     } catch (err) { alert('Invalid file format'); }
@@ -1621,13 +1561,17 @@
         }
         window.onChatOpened = function() {};
 
-        // ============================================================
-        // ===== SEARCH WITH ULTRAVIOLET PROXY (FIXED) =====
-        // ============================================================
+        // =============================================================
+        // ===== SEARCH WITH PUBLIC PROXY (FIXED – NO LOCAL FILES) =====
+        // =============================================================
 
         const searchInput = document.getElementById('searchInput');
         const searchGo = document.getElementById('searchGo');
         const searchOpenTab = document.getElementById('searchOpenTab');
+        const searchFrame = document.getElementById('searchFrame');
+
+        // Public proxy service – removes X-Frame-Options so pages can be iframed
+        const PROXY_URL = 'https://corsproxy.io/?url=';
 
         function getTargetUrl(input) {
             let target = input.trim();
@@ -1643,113 +1587,26 @@
             return target;
         }
 
-        // Wait for the UV library and register the service worker
-        let uvReady = false;
-        let uvInstance = null;
-
-        function initUV() {
-            if (typeof Ultraviolet === 'undefined') {
-                console.warn('Ultraviolet not loaded, retrying...');
-                setTimeout(initUV, 300);
-                return;
-            }
-            try {
-                // Create UV instance with your config
-                // We assume uv.config.js is loaded and provides the config.
-                // If not, we define a default config.
-                // In your case, you have uv.config.js, so we try to use the global config if available.
-                // But we'll set up a new instance with your paths.
-                uvInstance = new Ultraviolet({
-                    prefix: '/service/',
-                    encodeUrl: Ultraviolet.codec.xor.encode,
-                    decodeUrl: Ultraviolet.codec.xor.decode,
-                    handler: '/uv.handler.js',
-                    client: '/uv.client.js',
-                    bundle: '/uv.bundle.js',
-                    config: '/uv.config.js',
-                    sw: '/uv.sw.js'
-                });
-
-                // Register the service worker
-                if ('serviceWorker' in navigator) {
-                    navigator.serviceWorker.register('/uv.sw.js', { scope: '/service/' })
-                        .then(registration => {
-                            console.log('UV Service Worker registered:', registration);
-                        })
-                        .catch(err => {
-                            console.warn('Service worker registration failed:', err);
-                        });
-                }
-
-                uvReady = true;
-                console.log('Ultraviolet proxy initialized.');
-            } catch (err) {
-                console.error('Failed to initialize Ultraviolet:', err);
-            }
+        function loadInIframe() {
+            const target = getTargetUrl(searchInput.value);
+            if (!target) return;
+            const proxyUrl = PROXY_URL + encodeURIComponent(target);
+            searchFrame.src = proxyUrl;
         }
 
-        // Call initUV after a short delay to ensure scripts are loaded.
-        setTimeout(initUV, 400);
-
-        function navigateViaUV(target) {
-            if (uvReady && uvInstance) {
-                try {
-                    const encoded = uvInstance.encodeUrl(target);
-                    const proxyPath = uvInstance.prefix + encoded;
-                    window.location.href = proxyPath;
-                } catch (err) {
-                    console.error('UV encoding error:', err);
-                    window.location.href = target;
-                }
-            } else {
-                console.warn('UV not ready, direct navigation.');
-                window.location.href = target;
-            }
+        function openInNewTab() {
+            const target = getTargetUrl(searchInput.value);
+            if (!target) return;
+            const proxyUrl = PROXY_URL + encodeURIComponent(target);
+            window.open(proxyUrl, '_blank');
         }
 
-        function openInNewTabUV(target) {
-            if (uvReady && uvInstance) {
-                try {
-                    const encoded = uvInstance.encodeUrl(target);
-                    const proxyPath = uvInstance.prefix + encoded;
-                    window.open(proxyPath, '_blank');
-                } catch (err) {
-                    console.error('UV encoding error:', err);
-                    window.open(target, '_blank');
-                }
-            } else {
-                window.open(target, '_blank');
-            }
-        }
-
-        function performSearch() {
-    let input = searchInput.value.trim();
-    if (!input) return;
-    if (!/^https?:\/\//i.test(input) && !input.includes('.')) {
-        input = 'https://google.com' + encodeURIComponent(input);
-    } else if (!/^https?:\/\//i.test(input)) {
-        input = 'https://' + input;
-    }
-    window.location.href = 'https://nowgg.nl' + encodeURIComponent(input);
-}
-
-function openInNewTab() {
-    let input = searchInput.value.trim();
-    if (!input) return;
-    if (!/^https?:\/\//i.test(input) && !input.includes('.')) {
-        input = 'https://google.com' + encodeURIComponent(input);
-    } else if (!/^https?:\/\//i.test(input)) {
-        input = 'https://' + input;
-    }
-    window.open('https://nowgg.nl' + encodeURIComponent(input), '_blank');
-}
-
-        searchGo.addEventListener('click', performSearch);
+        searchGo.addEventListener('click', loadInIframe);
         searchOpenTab.addEventListener('click', openInNewTab);
         searchInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault();
-                performSearch();
+                loadInIframe();
             }
         });
 
@@ -1758,7 +1615,7 @@ function openInNewTab() {
             requestAnimationFrame(drawEmojis);
         }, 300);
 
-        console.log('🚀 EAHaqual with Ultraviolet proxy loaded.');
+        console.log('🚀 EAHaqual with public proxy loaded.');
     </script>
 </body>
 </html>
