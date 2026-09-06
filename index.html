@@ -5,16 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0a0f1c" />
     <title>EAHaqual Unblocked</title>
-    <!-- Fonts & Icons (same as before) -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet" />
-    <!-- Ultraviolet client (from CDN – you can also download and host it locally) -->
+
+    <!-- ===== ULTRAVIOLET SCRIPTS (from CDN – you can also host them locally) ===== -->
     <script src="https://cdn.jsdelivr.net/npm/@titaniumnetwork-dev/ultraviolet/dist/uv.bundle.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@titaniumnetwork-dev/ultraviolet/dist/uv.client.js"></script>
+
     <style>
-        /* ===== YOUR EXISTING STYLES (unchanged) ===== */
+        /* === RESET & VARIABLES === */
         * { margin:0; padding:0; box-sizing:border-box; }
         :root {
             --bg-primary: #0a0f1c;
@@ -274,7 +275,7 @@
         ::-webkit-scrollbar-track { background:var(--bg-secondary); }
         ::-webkit-scrollbar-thumb { background:var(--accent-cyan); border-radius:3px; }
 
-        /* Search tab styles – we keep the search box, but we don't use an iframe anymore (we navigate the page) */
+        /* Search tab styles */
         .search-section { padding:24px 0; }
         .search-header { text-align:center; margin-bottom:20px; }
         .search-header h2 { font-family:var(--font-display); font-weight:700; font-size:26px; margin-bottom:4px; }
@@ -283,8 +284,9 @@
         .search-box input { flex:1; padding:12px 16px; border-radius:8px; border:1px solid var(--border-color); background:var(--bg-secondary); color:var(--text-primary); font-size:14px; outline:none; min-width:180px; }
         .search-box input:focus { border-color:var(--accent-cyan); }
         .search-box .btn-amber { background:var(--accent-amber); color:#0a0f1c; }
-        /* We remove the iframe and instead just show a note */
         .proxy-info { text-align:center; color:var(--text-muted); margin-top:20px; font-size:14px; }
+        /* Remove iframe – we navigate the page */
+        #searchFrame { display:none; }
 
         /* Responsive */
         @media (max-width:768px) {
@@ -572,7 +574,7 @@
     </script>
 
     <script type="module">
-        // ===== FIREBASE IMPORTS (unchanged) =====
+        // ===== FIREBASE IMPORTS =====
         import { initializeApp } from "firebase/app";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "firebase/auth";
         import {
@@ -1619,57 +1621,10 @@
         }
         window.onChatOpened = function() {};
 
-        // ===== SEARCH WITH ULTRAVIOLET PROXY =====
-        // This script runs after the DOM is ready and the Ultraviolet library is loaded.
-        // We'll set up the Ultraviolet client and handle search submissions.
+        // ============================================================
+        // ===== SEARCH WITH ULTRAVIOLET PROXY (FIXED) =====
+        // ============================================================
 
-        // Wait for the UV library to be available
-        function initUltraviolet() {
-            // The UV client is already imported via <script> tags above.
-            // We'll use the global `Ultraviolet` constructor.
-            try {
-                // Check if the UV library is available
-                if (typeof Ultraviolet === 'undefined') {
-                    console.warn('Ultraviolet library not loaded, retrying...');
-                    setTimeout(initUltraviolet, 500);
-                    return;
-                }
-
-                // Configuration from your uv.config.js
-                // We'll assume the config is loaded separately, but we'll define it here for completeness.
-                // If you have a custom config, you can load it via <script src="uv.config.js"></script>
-                // For now, we'll use the default config with a bare server (you'll need to adjust).
-                // Since you have uv.config.js, we'll try to use it if available.
-                // We'll also need to set the service worker registration.
-                // For this example, we'll use the default bare client.
-
-                // Create a new Ultraviolet instance
-                // The bare server URL is typically '/bare/' – you may need to adjust.
-                const uv = new Ultraviolet({
-                    prefix: '/service/',
-                    encodeUrl: Ultraviolet.codec.xor.encode,
-                    decodeUrl: Ultraviolet.codec.xor.decode,
-                    handler: '/uv.handler.js', // if you have it
-                    client: '/uv.client.js',
-                    bundle: '/uv.bundle.js',
-                    config: '/uv.config.js',
-                    sw: '/uv.sw.js'
-                });
-
-                // Store the uv instance globally so we can use it later
-                window.__uv = uv;
-
-                console.log('Ultraviolet proxy initialized.');
-            } catch (err) {
-                console.error('Failed to initialize Ultraviolet:', err);
-            }
-        }
-
-        // Initialize UV when the page loads
-        // We'll call it after a short delay to ensure scripts are loaded.
-        setTimeout(initUltraviolet, 300);
-
-        // Search logic
         const searchInput = document.getElementById('searchInput');
         const searchGo = document.getElementById('searchGo');
         const searchOpenTab = document.getElementById('searchOpenTab');
@@ -1688,49 +1643,95 @@
             return target;
         }
 
+        // Wait for the UV library and register the service worker
+        let uvReady = false;
+        let uvInstance = null;
+
+        function initUV() {
+            if (typeof Ultraviolet === 'undefined') {
+                console.warn('Ultraviolet not loaded, retrying...');
+                setTimeout(initUV, 300);
+                return;
+            }
+            try {
+                // Create UV instance with your config
+                // We assume uv.config.js is loaded and provides the config.
+                // If not, we define a default config.
+                // In your case, you have uv.config.js, so we try to use the global config if available.
+                // But we'll set up a new instance with your paths.
+                uvInstance = new Ultraviolet({
+                    prefix: '/service/',
+                    encodeUrl: Ultraviolet.codec.xor.encode,
+                    decodeUrl: Ultraviolet.codec.xor.decode,
+                    handler: '/uv.handler.js',
+                    client: '/uv.client.js',
+                    bundle: '/uv.bundle.js',
+                    config: '/uv.config.js',
+                    sw: '/uv.sw.js'
+                });
+
+                // Register the service worker
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.register('/uv.sw.js', { scope: '/service/' })
+                        .then(registration => {
+                            console.log('UV Service Worker registered:', registration);
+                        })
+                        .catch(err => {
+                            console.warn('Service worker registration failed:', err);
+                        });
+                }
+
+                uvReady = true;
+                console.log('Ultraviolet proxy initialized.');
+            } catch (err) {
+                console.error('Failed to initialize Ultraviolet:', err);
+            }
+        }
+
+        // Call initUV after a short delay to ensure scripts are loaded.
+        setTimeout(initUV, 400);
+
+        function navigateViaUV(target) {
+            if (uvReady && uvInstance) {
+                try {
+                    const encoded = uvInstance.encodeUrl(target);
+                    const proxyPath = uvInstance.prefix + encoded;
+                    window.location.href = proxyPath;
+                } catch (err) {
+                    console.error('UV encoding error:', err);
+                    window.location.href = target;
+                }
+            } else {
+                console.warn('UV not ready, direct navigation.');
+                window.location.href = target;
+            }
+        }
+
+        function openInNewTabUV(target) {
+            if (uvReady && uvInstance) {
+                try {
+                    const encoded = uvInstance.encodeUrl(target);
+                    const proxyPath = uvInstance.prefix + encoded;
+                    window.open(proxyPath, '_blank');
+                } catch (err) {
+                    console.error('UV encoding error:', err);
+                    window.open(target, '_blank');
+                }
+            } else {
+                window.open(target, '_blank');
+            }
+        }
+
         function performSearch() {
             const target = getTargetUrl(searchInput.value);
             if (!target) return;
-
-            // Use Ultraviolet to encode the URL and navigate
-            try {
-                // If UV is ready, use it to construct the proxy URL.
-                // We need to encode the target.
-                // The UV instance can be used like: uv.rewriteUrl(target)
-                // But we'll directly navigate to the encoded path.
-                // We'll use the UV client's prefix and encode.
-                if (window.__uv) {
-                    const encoded = window.__uv.encodeUrl(target);
-                    const proxyPath = window.__uv.prefix + encoded;
-                    // Navigate to the proxy path
-                    window.location.href = proxyPath;
-                } else {
-                    // Fallback: use a simple bare proxy if available, or just open directly.
-                    // For now, we'll open the target directly (not proxied).
-                    window.location.href = target;
-                    console.warn('Ultraviolet not ready, direct navigation.');
-                }
-            } catch (err) {
-                console.error('Proxy navigation error:', err);
-                window.location.href = target;
-            }
+            navigateViaUV(target);
         }
 
         function openInNewTab() {
             const target = getTargetUrl(searchInput.value);
             if (!target) return;
-            // Use the same logic but open in new tab
-            try {
-                if (window.__uv) {
-                    const encoded = window.__uv.encodeUrl(target);
-                    const proxyPath = window.__uv.prefix + encoded;
-                    window.open(proxyPath, '_blank');
-                } else {
-                    window.open(target, '_blank');
-                }
-            } catch (err) {
-                window.open(target, '_blank');
-            }
+            openInNewTabUV(target);
         }
 
         searchGo.addEventListener('click', performSearch);
