@@ -524,12 +524,12 @@
             </div>
         </section>
 
-        <!-- SEARCH (AllOrigins Proxy) -->
+        <!-- SEARCH (corsproxy.io) -->
         <section class="panel" id="panel-search">
             <div class="search-section">
                 <div class="search-header">
                     <h2>🔍 Search the Web</h2>
-                    <p>Enter a URL or search term – it will be routed through the free AllOrigins proxy.</p>
+                    <p>Enter a URL or search term – it will be routed through a free proxy.</p>
                 </div>
                 <div class="search-box">
                     <input type="text" id="searchInput" placeholder="example.com or search term...">
@@ -551,7 +551,7 @@
     </div>
 
     <footer class="footer container">
-        <p>EAHaqual Unblocked — powered by AllOrigins proxy 🚀</p>
+        <p>EAHaqual Unblocked — powered by corsproxy.io 🚀</p>
     </footer>
 
     <!-- ===== IMPORTS ===== -->
@@ -1066,7 +1066,7 @@
             }
         });
 
-        // ===== CHAT STATE =====
+        // ===== CHAT STATE (unchanged) =====
         let currentUid = null;
         let currentName = '';
         let usernameSet = false;
@@ -1562,7 +1562,7 @@
         window.onChatOpened = function() {};
 
         // =============================================================
-        // ===== SEARCH WITH AllOrigins PROXY (FREE, NO API KEY) =====
+        // ===== SEARCH WITH CORSPROXY.IO (FREE, NO API KEY) =====
         // =============================================================
 
         const searchInput = document.getElementById('searchInput');
@@ -1570,8 +1570,8 @@
         const searchOpenTab = document.getElementById('searchOpenTab');
         const searchFrame = document.getElementById('searchFrame');
 
-        // AllOrigins proxy – free, no API key required
-        const PROXY_URL = 'https://api.allorigins.win/get?url=';
+        // corsproxy.io – free, no API key, works with iframes
+        const PROXY_URL = 'https://corsproxy.io/?url=';
 
         function getTargetUrl(input) {
             let target = input.trim();
@@ -1615,7 +1615,7 @@
             requestAnimationFrame(drawEmojis);
         }, 300);
 
-        console.log('🚀 EAHaqual with AllOrigins proxy loaded.');
+        console.log('🚀 EAHaqual with corsproxy.io loaded.');
     </script>
 </body>
 </html>
