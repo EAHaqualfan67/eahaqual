@@ -524,12 +524,12 @@
             </div>
         </section>
 
-        <!-- SEARCH (Public Proxy) -->
+        <!-- SEARCH (AllOrigins Proxy) -->
         <section class="panel" id="panel-search">
             <div class="search-section">
                 <div class="search-header">
                     <h2>🔍 Search the Web</h2>
-                    <p>Enter a URL or search term – it will be routed through a public proxy.</p>
+                    <p>Enter a URL or search term – it will be routed through the free AllOrigins proxy.</p>
                 </div>
                 <div class="search-box">
                     <input type="text" id="searchInput" placeholder="example.com or search term...">
@@ -551,7 +551,7 @@
     </div>
 
     <footer class="footer container">
-        <p>EAHaqual Unblocked — powered by public proxy 🚀</p>
+        <p>EAHaqual Unblocked — powered by AllOrigins proxy 🚀</p>
     </footer>
 
     <!-- ===== IMPORTS ===== -->
@@ -566,7 +566,7 @@
     </script>
 
     <script type="module">
-        // ===== FIREBASE IMPORTS (unchanged) =====
+        // ===== FIREBASE IMPORTS =====
         import { initializeApp } from "firebase/app";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "firebase/auth";
         import {
@@ -618,7 +618,7 @@
             }, 5000);
         }
 
-        // ===== GAMES (unchanged) =====
+        // ===== GAMES =====
         const GAMES = [
             { id: 'roll', title: 'Slope Rolling', url: 'https://html5.gamedistribution.com/0022998ce3c54962be6ffe178229b168/?gd_sdk_referrer_url=https://eahaqual-unblocked.web.app/', img: 'https://www.onlinegames.io/media/posts/961/Slope-Rolling.jpg' },
             { id: 'bike', title: 'Bike Rush', url: 'https://html5.gamedistribution.com/c23f50871019481f99d1ce3d56571dfd/?gd_sdk_referrer_url=https://eahaqual-unblocked.web.app/', img: 'https://www.onlinegames.io/media/posts/1091/italian-brainrot-bike-rush.webp' },
@@ -735,7 +735,7 @@
         settingsClose.addEventListener('click', () => settingsOverlay.classList.remove('open'));
         settingsOverlay.addEventListener('click', (e) => { if (e.target === settingsOverlay) settingsOverlay.classList.remove('open'); });
 
-        // ===== HOTKEYS (unchanged) =====
+        // ===== HOTKEYS =====
         let hotkeys = JSON.parse(localStorage.getItem('eahaqual_hotkeys') || '[]');
         let captureKey = null;
 
@@ -809,7 +809,7 @@
             keyCapture.textContent = '🔑';
         });
 
-        // Settings reset/export/import/clear (unchanged)
+        // Settings reset/export/import/clear
         document.getElementById('settingsReset').addEventListener('click', () => {
             localStorage.removeItem('eahaqual_hotkeys');
             hotkeys = [];
@@ -927,7 +927,7 @@
             }
         });
 
-        // Settings live updates (unchanged)
+        // Settings live updates
         document.getElementById('settingDarkMode').addEventListener('change', function() {
             darkMode = this.checked;
             document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
@@ -981,7 +981,7 @@
             }
         });
 
-        // ===== EMOJI CANVAS (unchanged) =====
+        // ===== EMOJI CANVAS =====
         const canvas = document.getElementById('emojiCanvas');
         const ctx = canvas.getContext('2d');
         let emojis = [];
@@ -1066,7 +1066,7 @@
             }
         });
 
-        // ===== CHAT STATE (unchanged) =====
+        // ===== CHAT STATE =====
         let currentUid = null;
         let currentName = '';
         let usernameSet = false;
@@ -1562,7 +1562,7 @@
         window.onChatOpened = function() {};
 
         // =============================================================
-        // ===== SEARCH WITH PUBLIC PROXY (FIXED – NO LOCAL FILES) =====
+        // ===== SEARCH WITH AllOrigins PROXY (FREE, NO API KEY) =====
         // =============================================================
 
         const searchInput = document.getElementById('searchInput');
@@ -1570,8 +1570,8 @@
         const searchOpenTab = document.getElementById('searchOpenTab');
         const searchFrame = document.getElementById('searchFrame');
 
-        // Public proxy service – removes X-Frame-Options so pages can be iframed
-        const PROXY_URL = 'https://corsproxy.io/?url=';
+        // AllOrigins proxy – free, no API key required
+        const PROXY_URL = 'https://api.allorigins.win/get?url=';
 
         function getTargetUrl(input) {
             let target = input.trim();
@@ -1615,7 +1615,7 @@
             requestAnimationFrame(drawEmojis);
         }, 300);
 
-        console.log('🚀 EAHaqual with public proxy loaded.');
+        console.log('🚀 EAHaqual with AllOrigins proxy loaded.');
     </script>
 </body>
 </html>
