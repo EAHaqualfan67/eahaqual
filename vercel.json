@@ -1,8 +1,0 @@
-{
-  "version": 2,
-  "cleanUrls": true,
-  "rewrites": [
-    { "source": "/uv/service/(.*)", "destination": "/index.html" },
-    { "source": "/service/(.*)", "destination": "/index.html" }
-  ]
-}
