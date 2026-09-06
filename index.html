@@ -1,183 +1,1689 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0a0f1c" />
     <title>EAHaqual Unblocked</title>
-    <script src="/uv/uv.bundle.js" defer></script>
-    <script src="/uv/uv.config.js" defer></script>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet" />
     <style>
+        /* === RESET & VARIABLES === */
+        * { margin:0; padding:0; box-sizing:border-box; }
+        :root {
+            --bg-primary: #0a0f1c;
+            --bg-secondary: #0f1729;
+            --bg-elevated: #161f36;
+            --bg-card: #1b2743;
+            --text-primary: #edf2fb;
+            --text-secondary: #96a3c2;
+            --text-muted: #5c6784;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #22d3ee;
+            --accent-gold: #fbbf24;
+            --accent-green: #22c55e;
+            --accent-amber: #f59e0b;
+            --border-color: rgba(255, 255, 255, 0.07);
+            --shadow-soft: 0 6px 20px rgba(0,0,0,0.3);
+            --shadow-lift: 0 16px 36px rgba(0,0,0,0.4);
+            --radius: 14px;
+            --radius-sm: 10px;
+            --transition: 0.2s cubic-bezier(0.4,0,0.2,1);
+            --font-display: 'Space Grotesk','Inter',sans-serif;
+            --font-body: 'Inter',-apple-system,sans-serif;
+            --emoji-opacity:1;
+            --emoji-speed:1;
+            --emoji-density:1;
+            --repel-strength:1;
+            --chat-font-size:13px;
+            --chat-bubble-radius:12px;
+            --animation-speed:1;
+            --custom-bg:transparent;
+            --custom-accent:#3b82f6;
+        }
+        [data-theme="light"] {
+            --bg-primary: #f3f6fb;
+            --bg-secondary: #e7edf6;
+            --bg-elevated: #dbe3f0;
+            --bg-card: #ccd7ea;
+            --text-primary: #0e1524;
+            --text-secondary: #3d4a67;
+            --text-muted: #6b7690;
+            --border-color: rgba(14,21,36,0.09);
+            --shadow-soft: 0 6px 20px rgba(20,30,55,0.08);
+            --shadow-lift: 0 16px 36px rgba(20,30,55,0.12);
+        }
         body {
-            background-color: #0a0f1c;
-            color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
             min-height: 100vh;
+            transition: background var(--transition), color var(--transition);
             overflow-x: hidden;
+            position: relative;
         }
-        header {
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background: var(--custom-bg, transparent);
+            transition: background 0.3s;
+        }
+        #emojiCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            background-color: #111827;
-            padding: 15px 0;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: var(--emoji-opacity);
+            transition: opacity 0.5s ease;
         }
-        .logo-area {
-            margin-left: 20px;
-            font-size: 24px;
-            font-weight: bold;
-            color: #3b82f6;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .container { position:relative; z-index:1; max-width:1100px; margin:0 auto; padding:0 20px; }
+        .header { display:flex; align-items:center; justify-content:space-between; padding:16px 0; border-bottom:1px solid var(--border-color); flex-wrap:wrap; gap:12px; }
+        .brand { display:flex; align-items:center; gap:10px; text-decoration:none; cursor:pointer; }
+        .brand-icon { font-size:32px; line-height:1; flex-shrink:0; width:40px; text-align:center; }
+        .brand-text { display:flex; flex-direction:column; line-height:1.1; }
+        .brand-name { font-family:var(--font-display); font-weight:700; font-size:19px; color:var(--text-primary); letter-spacing:-0.2px; }
+        .brand-tag { font-size:10px; font-weight:700; color:var(--accent-cyan); text-transform:uppercase; letter-spacing:1px; }
+        .nav-tabs { display:flex; gap:4px; background:var(--bg-secondary); padding:4px; border-radius:10px; border:1px solid var(--border-color); flex-wrap:wrap; }
+        .nav-tab { padding:7px 18px; border:none; border-radius:8px; background:transparent; color:var(--text-secondary); font-family:var(--font-body); font-weight:600; font-size:13px; cursor:pointer; transition:all var(--transition); }
+        .nav-tab:hover { color:var(--text-primary); }
+        .nav-tab.active { background:var(--accent-blue); color:#fff; }
+        .header-actions { display:flex; gap:8px; align-items:center; }
+        .theme-toggle, .settings-toggle { width:38px; height:38px; border-radius:10px; border:1px solid var(--border-color); background:var(--bg-secondary); color:var(--text-primary); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:16px; transition:all var(--transition); }
+        .theme-toggle:hover, .settings-toggle:hover { border-color:var(--accent-cyan); }
+        .notification-container { position:fixed; top:80px; right:20px; z-index:150; display:flex; flex-direction:column; gap:10px; max-width:360px; width:100%; pointer-events:none; }
+        .notification-toast { background:var(--bg-elevated); border:1px solid var(--border-color); border-radius:12px; padding:14px 18px; box-shadow:var(--shadow-lift); animation:slideInRight 0.35s cubic-bezier(0.34,1.56,0.64,1); pointer-events:auto; backdrop-filter:blur(10px); border-left:3px solid var(--accent-cyan); display:flex; align-items:flex-start; gap:12px; }
+        .notification-toast.leave { border-left-color:var(--accent-amber); }
+        .notification-toast.join { border-left-color:var(--accent-green); }
+        @keyframes slideInRight { from { opacity:0; transform:translateX(30px); } to { opacity:1; transform:translateX(0); } }
+        @keyframes slideOutRight { from { opacity:1; transform:translateX(0); } to { opacity:0; transform:translateX(30px); } }
+        .notification-toast .notif-icon { font-size:18px; flex-shrink:0; margin-top:2px; }
+        .notification-toast .notif-content { flex:1; }
+        .notification-toast .notif-content .notif-title { font-weight:600; font-size:13px; color:var(--text-primary); }
+        .notification-toast .notif-content .notif-body { font-size:12.5px; color:var(--text-secondary); margin-top:2px; }
+        .notification-toast .notif-content .notif-time { font-size:10px; color:var(--text-muted); margin-top:4px; display:block; }
+        .notification-toast .notif-close { background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:14px; padding:0 0 0 8px; flex-shrink:0; transition:color var(--transition); }
+        .notification-toast .notif-close:hover { color:var(--text-primary); }
+        .panel { display:none; animation:fadeIn 0.35s ease; }
+        .panel.active { display:block; }
+        @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+        .home-section { display:flex; flex-direction:column; align-items:center; text-align:center; padding:48px 0 30px; }
+        .hero-logo-text { font-family:var(--font-display); font-weight:800; font-size:clamp(48px,12vw,96px); background:linear-gradient(135deg,var(--accent-cyan),var(--accent-blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; letter-spacing:-2px; margin-bottom:8px; line-height:1.1; }
+        .hero-logo-sub { font-size:clamp(14px,2.5vw,22px); color:var(--text-secondary); font-weight:500; letter-spacing:4px; text-transform:uppercase; margin-bottom:12px; }
+        .home-subtitle { font-size:17px; color:var(--text-secondary); max-width:480px; line-height:1.7; margin-bottom:22px; }
+        .status-pill { display:inline-flex; align-items:center; gap:10px; padding:6px 16px 6px 12px; border-radius:30px; background:var(--bg-elevated); border:1px solid var(--border-color); font-size:13px; color:var(--text-secondary); margin-bottom:28px; }
+        .status-dot { width:8px; height:8px; border-radius:50%; background:var(--accent-green); animation:dotPulse 1.8s ease-in-out infinite; }
+        @keyframes dotPulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.55; transform:scale(0.85); } }
+        .player-card { width:100%; max-width:400px; background:var(--bg-elevated); border-radius:var(--radius); padding:22px 24px; border:1px solid var(--border-color); box-shadow:var(--shadow-soft); }
+        .player-card-header { display:flex; align-items:center; gap:10px; font-weight:600; font-size:14px; color:var(--text-secondary); margin-bottom:14px; }
+        .player-card-header .badge { width:28px; height:28px; border-radius:8px; background:var(--accent-blue); display:flex; align-items:center; justify-content:center; font-size:14px; color:#fff; }
+        .player-row { display:flex; gap:10px; }
+        .player-row input { flex:1; padding:10px 14px; border-radius:8px; border:1px solid var(--border-color); background:var(--bg-secondary); color:var(--text-primary); font-family:var(--font-body); font-size:14px; outline:none; transition:border var(--transition); }
+        .player-row input:focus { border-color:var(--accent-cyan); }
+        .player-row input::placeholder { color:var(--text-muted); }
+        .btn-primary { padding:10px 22px; border:none; border-radius:8px; background:var(--accent-blue); color:#fff; font-family:var(--font-body); font-weight:600; font-size:14px; cursor:pointer; transition:all var(--transition); white-space:nowrap; }
+        .btn-primary:hover { background:#2f6fe0; transform:translateY(-1px); box-shadow:var(--shadow-soft); }
+        .btn-primary:active { transform:translateY(0); }
+        .btn-primary:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
+        .player-note { margin-top:10px; font-size:12px; color:var(--text-muted); line-height:1.5; }
+        .welcome-back { display:flex; flex-direction:column; gap:6px; }
+        .welcome-back p { font-size:14px; }
+        .code-display { font-family:'Space Grotesk',monospace; font-weight:700; color:var(--accent-cyan); font-size:18px; letter-spacing:1.5px; }
+        .forget-link { background:none; border:none; color:var(--text-muted); font-size:12px; text-decoration:underline; cursor:pointer; padding:0; align-self:flex-start; transition:color var(--transition); }
+        .forget-link:hover { color:var(--accent-amber); }
+        .games-section { padding:24px 0; }
+        .games-header { text-align:center; margin-bottom:24px; }
+        .games-header h2 { font-family:var(--font-display); font-weight:700; font-size:26px; margin-bottom:4px; }
+        .games-header p { color:var(--text-secondary); font-size:14px; }
+        .games-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:14px; max-width:750px; margin:0 auto; }
+        .game-tile { aspect-ratio:1; border-radius:var(--radius); border:1px solid var(--border-color); background:var(--bg-elevated); cursor:pointer; position:relative; overflow:hidden; transition:all var(--transition); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:10px; }
+        .game-tile:hover { transform:translateY(-3px); border-color:var(--accent-cyan); box-shadow:var(--shadow-soft); }
+        .game-tile img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+        .game-tile .tile-overlay { position:absolute; inset:0; background:linear-gradient(to top,rgba(10,15,28,0.92) 0%,rgba(10,15,28,0.15) 60%,transparent 80%); }
+        .game-tile .tile-label { position:relative; z-index:1; font-weight:600; font-size:11px; color:#fff; text-align:center; margin-top:auto; padding:4px 10px; background:rgba(0,0,0,0.35); border-radius:6px; backdrop-filter:blur(4px); }
+        .game-player { position:fixed; inset:0; z-index:100; background:var(--bg-primary); display:none; flex-direction:column; animation:fadeIn 0.25s ease; }
+        .game-player.open { display:flex; }
+        .game-player-header { display:flex; align-items:center; justify-content:space-between; padding:14px 20px; border-bottom:1px solid var(--border-color); background:var(--bg-secondary); }
+        .game-player-header .title { font-weight:700; font-size:16px; }
+        .game-player-close { padding:6px 16px; border:1px solid var(--border-color); border-radius:8px; background:var(--bg-elevated); color:var(--text-primary); font-family:var(--font-body); font-weight:600; font-size:13px; cursor:pointer; transition:all var(--transition); }
+        .game-player-close:hover { border-color:var(--accent-amber); color:var(--accent-amber); }
+        .game-player iframe { flex:1; border:none; width:100%; }
+        .chat-section { padding:24px 0; }
+        .chat-header { text-align:center; margin-bottom:20px; }
+        .chat-header h2 { font-family:var(--font-display); font-weight:700; font-size:26px; margin-bottom:4px; }
+        .chat-header p { color:var(--text-secondary); font-size:14px; }
+        .chat-container { display:flex; gap:14px; background:var(--bg-elevated); border-radius:var(--radius); border:1px solid var(--border-color); overflow:hidden; height:min(560px,65vh); box-shadow:var(--shadow-soft); }
+        .chat-sidebar { width:180px; flex-shrink:0; background:var(--bg-secondary); border-right:1px solid var(--border-color); display:flex; flex-direction:column; padding:10px 0; }
+        .chat-sidebar-title { padding:0 14px 8px; font-weight:700; font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; }
+        .chat-convo-list { flex:1; overflow-y:auto; padding:0 6px; display:flex; flex-direction:column; gap:3px; }
+        .chat-convo-item { display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:8px; border:1px solid transparent; background:transparent; color:var(--text-secondary); font-family:var(--font-body); font-weight:500; font-size:12.5px; cursor:pointer; transition:all var(--transition); width:100%; text-align:left; }
+        .chat-convo-item:hover { color:var(--text-primary); border-color:var(--border-color); background:var(--bg-elevated); }
+        .chat-convo-item.active { background:var(--accent-blue); color:#fff; border-color:transparent; }
+        .chat-convo-item .item-icon { font-size:13px; }
+        .chat-convo-item .item-label { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+        .chat-convo-item .item-close { background:none; border:none; color:inherit; opacity:0.5; cursor:pointer; font-size:11px; padding:0 2px; }
+        .chat-convo-item .item-close:hover { opacity:1; }
+        .chat-new-btn { margin:6px 10px 0; padding:8px; border:1px dashed var(--border-color); border-radius:8px; background:transparent; color:var(--text-muted); font-family:var(--font-body); font-weight:600; font-size:12px; cursor:pointer; transition:all var(--transition); }
+        .chat-new-btn:hover { border-color:var(--accent-cyan); color:var(--accent-cyan); }
+        .chat-main { flex:1; display:flex; flex-direction:column; min-width:0; }
+        .chat-main-header { display:flex; align-items:center; justify-content:space-between; padding:12px 18px; border-bottom:1px solid var(--border-color); flex-shrink:0; }
+        .chat-main-header .chat-title { display:flex; align-items:center; gap:8px; font-weight:700; font-size:14px; }
+        .chat-main-header .chat-actions { display:flex; gap:6px; align-items:center; }
+        .chat-action-btn { padding:5px 12px; border:1px solid var(--border-color); border-radius:6px; background:var(--bg-secondary); color:var(--text-secondary); font-family:var(--font-body); font-weight:500; font-size:11px; cursor:pointer; transition:all var(--transition); }
+        .chat-action-btn:hover { border-color:var(--accent-amber); color:var(--accent-amber); }
+        .chat-members-panel { padding:8px 18px; border-bottom:1px solid var(--border-color); font-size:12px; color:var(--text-secondary); background:var(--bg-secondary); }
+        .chat-members-panel[hidden] { display:none; }
+        .chat-body { flex:1; display:flex; flex-direction:column; padding:14px 18px; overflow:hidden; }
+        .chat-gate { flex:1; display:flex; flex-direction:column; gap:14px; overflow-y:auto; padding-right:4px; }
+        .chat-gate[hidden] { display:none; }
+        .chat-gate-section { background:var(--bg-secondary); border-radius:10px; padding:14px; border:1px solid var(--border-color); }
+        .chat-gate-section .section-label { font-weight:700; font-size:13px; color:var(--text-secondary); margin-bottom:6px; }
+        .chat-gate-section .section-desc { font-size:12.5px; color:var(--text-muted); margin-bottom:8px; }
+        .chat-gate-section .player-row { margin-bottom:6px; }
+        .chat-gate-section .player-row:last-child { margin-bottom:0; }
+        .chat-room { flex:1; display:none; flex-direction:column; }
+        .chat-room.active { display:flex; }
+        .chat-messages { flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:5px; padding-right:4px; margin-bottom:10px; min-height:80px; font-size:var(--chat-font-size); }
+        .chat-msg { max-width:80%; padding:7px 12px; font-size:var(--chat-font-size); line-height:1.5; animation:fadeIn 0.2s ease; border-radius:var(--chat-bubble-radius); }
+        .chat-msg.mine { align-self:flex-end; background:var(--accent-blue); color:#fff; border-radius:var(--chat-bubble-radius) var(--chat-bubble-radius) 4px var(--chat-bubble-radius); }
+        .chat-msg.theirs { align-self:flex-start; background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:var(--chat-bubble-radius) var(--chat-bubble-radius) var(--chat-bubble-radius) 4px; }
+        .chat-msg.system { align-self:center; background:transparent; color:var(--text-muted); font-size:11px; padding:3px 10px; max-width:90%; text-align:center; }
+        .chat-msg .msg-who { font-weight:600; font-size:10.5px; color:var(--accent-cyan); display:block; margin-bottom:1px; }
+        .chat-msg.mine .msg-who { display:none; }
+        .chat-msg .msg-time { font-size:9.5px; color:var(--text-muted); display:block; text-align:right; margin-top:2px; }
+        .chat-msg.mine .msg-time { color:rgba(255,255,255,0.65); }
+        .chat-input-row { display:flex; gap:8px; }
+        .chat-input-row input { flex:1; padding:10px 14px; border-radius:8px; border:1px solid var(--border-color); background:var(--bg-secondary); color:var(--text-primary); font-family:var(--font-body); font-size:13px; outline:none; transition:border var(--transition); }
+        .chat-input-row input:focus { border-color:var(--accent-cyan); }
+        .chat-input-row input::placeholder { color:var(--text-muted); }
+        .welcome-overlay { position:fixed; inset:0; z-index:200; background:rgba(4,7,14,0.75); backdrop-filter:blur(8px); display:none; align-items:center; justify-content:center; animation:fadeIn 0.35s ease; }
+        .welcome-overlay.open { display:flex; }
+        .welcome-popup { background:var(--bg-elevated); border-radius:16px; padding:32px 36px; max-width:440px; width:90%; border:1px solid var(--border-color); box-shadow:var(--shadow-lift); text-align:center; animation:popIn 0.35s cubic-bezier(0.34,1.56,0.64,1); }
+        @keyframes popIn { from { opacity:0; transform:scale(0.92) translateY(16px); } to { opacity:1; transform:scale(1) translateY(0); } }
+        .welcome-popup .popup-icon { font-size:64px; margin:0 auto 14px; display:block; }
+        .welcome-popup h2 { font-family:var(--font-display); font-weight:700; font-size:24px; margin-bottom:6px; }
+        .welcome-popup h2 .highlight { color:var(--accent-cyan); }
+        .welcome-popup p { color:var(--text-secondary); font-size:14px; line-height:1.7; margin-bottom:6px; }
+        .welcome-popup .steps { text-align:left; margin:14px 0 18px; padding:0; list-style:none; }
+        .welcome-popup .steps li { padding:5px 0 5px 28px; background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2322d3ee' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E") left center no-repeat; background-size:16px; font-size:13px; color:var(--text-secondary); line-height:1.5; }
+        .welcome-popup .steps li strong { color:var(--text-primary); }
+        .welcome-popup .btn-primary { width:100%; padding:12px; font-size:15px; }
+        .settings-overlay { position:fixed; inset:0; z-index:180; background:rgba(4,7,14,0.7); backdrop-filter:blur(6px); display:none; align-items:center; justify-content:center; animation:fadeIn 0.3s ease; }
+        .settings-overlay.open { display:flex; }
+        .settings-panel { background:var(--bg-elevated); border-radius:18px; padding:28px 32px; max-width:780px; width:95%; max-height:88vh; overflow-y:auto; border:1px solid var(--border-color); box-shadow:var(--shadow-lift); animation:popIn 0.3s cubic-bezier(0.34,1.56,0.64,1); }
+        .settings-panel::-webkit-scrollbar { width:4px; }
+        .settings-panel::-webkit-scrollbar-track { background:var(--bg-secondary); border-radius:3px; }
+        .settings-panel::-webkit-scrollbar-thumb { background:var(--accent-cyan); border-radius:3px; }
+        .settings-header { display:flex; align-items:center; justify-content:space-between; padding-bottom:16px; border-bottom:1px solid var(--border-color); margin-bottom:20px; }
+        .settings-header h2 { font-family:var(--font-display); font-weight:700; font-size:24px; display:flex; align-items:center; gap:10px; }
+        .settings-close { width:36px; height:36px; border-radius:10px; border:1px solid var(--border-color); background:var(--bg-secondary); color:var(--text-primary); font-size:18px; cursor:pointer; transition:all var(--transition); display:flex; align-items:center; justify-content:center; }
+        .settings-close:hover { border-color:var(--accent-amber); color:var(--accent-amber); }
+        .settings-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+        .settings-group { background:var(--bg-secondary); border-radius:12px; padding:16px 18px; border:1px solid var(--border-color); }
+        .settings-group.full { grid-column:1/-1; }
+        .settings-group .group-title { font-weight:700; font-size:13px; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:12px; }
+        .setting-row { display:flex; align-items:center; justify-content:space-between; padding:6px 0; gap:12px; }
+        .setting-row .setting-label { font-size:13px; color:var(--text-primary); flex:1; }
+        .setting-row .setting-desc { font-size:11px; color:var(--text-muted); display:block; font-weight:400; }
+        .setting-row input[type="range"] { width:100px; accent-color:var(--accent-cyan); background:var(--bg-primary); height:4px; border-radius:2px; outline:none; cursor:pointer; }
+        .setting-row input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none; width:14px; height:14px; border-radius:50%; background:var(--accent-cyan); cursor:pointer; border:2px solid var(--bg-primary); }
+        .setting-row input[type="range"]::-moz-range-thumb { width:14px; height:14px; border-radius:50%; background:var(--accent-cyan); cursor:pointer; border:2px solid var(--bg-primary); }
+        .setting-row .range-value { min-width:28px; font-size:13px; font-weight:600; color:var(--accent-cyan); text-align:center; }
+        .toggle-switch { position:relative; width:42px; height:24px; flex-shrink:0; cursor:pointer; }
+        .toggle-switch input { opacity:0; width:0; height:0; }
+        .toggle-slider { position:absolute; inset:0; background:var(--bg-primary); border-radius:12px; transition:background 0.25s; border:1px solid var(--border-color); }
+        .toggle-slider::before { content:""; position:absolute; width:18px; height:18px; left:2px; bottom:2px; background:var(--text-muted); border-radius:50%; transition:transform 0.25s, background 0.25s; }
+        .toggle-switch input:checked+.toggle-slider { background:var(--accent-blue); border-color:var(--accent-blue); }
+        .toggle-switch input:checked+.toggle-slider::before { transform:translateX(18px); background:#fff; }
+        .setting-select { padding:4px 10px; border-radius:6px; border:1px solid var(--border-color); background:var(--bg-primary); color:var(--text-primary); font-family:var(--font-body); font-size:12px; outline:none; cursor:pointer; }
+        .setting-select:focus { border-color:var(--accent-cyan); }
+        .setting-color { width:36px; height:36px; border-radius:8px; border:2px solid var(--border-color); padding:0; cursor:pointer; background:none; }
+        .setting-color::-webkit-color-swatch-wrapper { padding:2px; }
+        .setting-color::-webkit-color-swatch { border:none; border-radius:5px; }
+        .settings-actions { display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; }
+        .settings-actions .btn-secondary { padding:8px 18px; border-radius:8px; border:1px solid var(--border-color); background:var(--bg-secondary); color:var(--text-secondary); font-family:var(--font-body); font-weight:600; font-size:12px; cursor:pointer; transition:all var(--transition); }
+        .settings-actions .btn-secondary:hover { border-color:var(--accent-amber); color:var(--accent-amber); }
+        .settings-actions .btn-danger { border-color:#ef4444; color:#ef4444; }
+        .settings-actions .btn-danger:hover { background:#ef4444; color:#fff; border-color:#ef4444; }
+        .hotkey-list { display:flex; flex-direction:column; gap:6px; margin-top:8px; max-height:140px; overflow-y:auto; }
+        .hotkey-item { display:flex; align-items:center; gap:10px; padding:6px 10px; background:var(--bg-primary); border-radius:6px; border:1px solid var(--border-color); font-size:12px; }
+        .hotkey-item .hk-key { font-weight:700; color:var(--accent-cyan); min-width:40px; text-align:center; font-family:monospace; font-size:14px; }
+        .hotkey-item .hk-url { flex:1; color:var(--text-secondary); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:11px; }
+        .hotkey-item .hk-remove { background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:14px; padding:0 4px; transition:color var(--transition); }
+        .hotkey-item .hk-remove:hover { color:#ef4444; }
+        .hotkey-add-row { display:flex; gap:8px; margin-top:8px; flex-wrap:wrap; }
+        .hotkey-add-row input { padding:6px 12px; border-radius:6px; border:1px solid var(--border-color); background:var(--bg-primary); color:var(--text-primary); font-family:var(--font-body); font-size:12px; outline:none; flex:1; min-width:80px; }
+        .hotkey-add-row input:focus { border-color:var(--accent-cyan); }
+        .hotkey-add-row .btn-small { padding:6px 14px; border:none; border-radius:6px; background:var(--accent-blue); color:#fff; font-weight:600; font-size:12px; cursor:pointer; transition:all var(--transition); }
+        .hotkey-add-row .btn-small:hover { background:#2f6fe0; }
+        .hotkey-add-row .hk-key-capture { min-width:60px; text-align:center; font-weight:700; color:var(--accent-cyan); font-family:monospace; font-size:14px; background:var(--bg-primary); border:1px dashed var(--border-color); border-radius:6px; padding:6px 8px; cursor:pointer; transition:border var(--transition); }
+        .hotkey-add-row .hk-key-capture.active { border-color:var(--accent-cyan); background:var(--bg-elevated); }
+        .footer { text-align:center; padding:24px 0 16px; border-top:1px solid var(--border-color); color:var(--text-muted); font-size:12px; margin-top:16px; }
+        ::-webkit-scrollbar { width:5px; }
+        ::-webkit-scrollbar-track { background:var(--bg-secondary); }
+        ::-webkit-scrollbar-thumb { background:var(--accent-cyan); border-radius:3px; }
+
+        /* Search tab styles */
+        .search-section { padding:24px 0; }
+        .search-header { text-align:center; margin-bottom:20px; }
+        .search-header h2 { font-family:var(--font-display); font-weight:700; font-size:26px; margin-bottom:4px; }
+        .search-header p { color:var(--text-secondary); font-size:14px; }
+        .search-box { display:flex; gap:10px; max-width:700px; margin:0 auto 10px; flex-wrap:wrap; justify-content:center; }
+        .search-box input { flex:1; padding:12px 16px; border-radius:8px; border:1px solid var(--border-color); background:var(--bg-secondary); color:var(--text-primary); font-size:14px; outline:none; min-width:180px; }
+        .search-box input:focus { border-color:var(--accent-cyan); }
+        .search-box .btn-amber { background:var(--accent-amber); color:#0a0f1c; }
+        #searchFrame { width:100%; height:70vh; border:none; border-radius:var(--radius); margin-top:14px; background:var(--bg-secondary); }
+
+        /* Responsive */
+        @media (max-width:768px) {
+            .header { flex-direction:column; align-items:stretch; gap:10px; }
+            .nav-tabs { justify-content:center; }
+            .chat-container { flex-direction:column; height:auto; min-height:460px; }
+            .chat-sidebar { width:100%; border-right:none; border-bottom:1px solid var(--border-color); flex-direction:row; flex-wrap:wrap; padding:6px; }
+            .chat-sidebar-title { display:none; }
+            .chat-convo-list { flex-direction:row; overflow-x:auto; padding:4px; gap:4px; flex:none; }
+            .chat-convo-item { white-space:nowrap; width:auto; flex-shrink:0; font-size:11px; padding:6px 10px; }
+            .chat-new-btn { display:none; }
+            .games-grid { grid-template-columns:repeat(3,1fr); }
+            .welcome-popup { padding:24px 20px; }
+            .notification-container { top:70px; right:10px; max-width:300px; }
+            .settings-grid { grid-template-columns:1fr; }
+            .settings-panel { padding:20px 16px; max-height:92vh; }
+            .setting-row input[type="range"] { width:70px; }
+            .search-box { flex-direction:column; align-items:stretch; }
+            .search-box input { min-width:auto; }
         }
-        nav {
-            margin-right: 20px;
-            display: flex;
-            gap: 20px;
+        @media (max-width:480px) {
+            .games-grid { grid-template-columns:repeat(2,1fr); }
+            .welcome-popup { padding:20px 16px; }
+            .notification-container { max-width:260px; }
+            .settings-header h2 { font-size:18px; }
+            .hero-logo-text { font-size:36px; }
         }
-        nav a {
-            color: #9ca3af;
-            text-decoration: none;
-            font-weight: 600;
-            padding: 8px 16px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-        nav a:hover, nav a.active {
-            color: #ffffff;
-            background-color: #3b82f6;
-        }
-        .main-container {
-            max-width: 800px;
-            width: 90%;
-            margin-top: 50px;
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-            text-align: center;
-            border: 1px solid rgba(59, 130, 246, 0.2);
-        }
-        h1 {
-            font-size: 36px;
-            margin-bottom: 10px;
-            color: #ffffff;
-        }
-        .subtitle {
-            color: #9ca3af;
-            margin-bottom: 40px;
-        }
-        .search-section {
-            background-color: rgba(15, 23, 42, 0.6);
-            border-radius: 15px;
-            padding: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .search-section h2 {
-            font-size: 22px;
-            margin-top: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        .search-box-container {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        .search-input {
-            flex: 1;
-            background-color: #0f172a;
-            border: 2px solid #3b82f6;
-            border-radius: 10px;
-            padding: 15px;
-            color: #ffffff;
-            font-size: 16px;
-            outline: none;
-            transition: box-shadow 0.3s ease;
-        }
-        .search-input:focus {
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
-        }
-        .go-button {
-            background-color: #3b82f6;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            padding: 0 30px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .go-button:hover {
-            background-color: #2563eb;
-        }
-        footer {
-            margin-top: auto;
-            padding: 20px;
-            color: #6b7280;
-            font-size: 14px;
-        }
+        @media (prefers-reduced-motion:reduce) { * { animation-duration:0.01ms !important; transition-duration:0.01ms !important; } }
     </style>
 </head>
 <body>
-    <header>
-        <div class="logo-area">
-            <span>🎮</span> EAHaqual <span style="font-size: 12px; background:#3b82f6; padding:2px 6px; border-radius:4px; color:white;">UNBLOCKED</span>
-        </div>
-        <nav>
-            <a href="#" class="active">Home</a>
-            <a href="#">Games</a>
-            <a href="#">Chat</a>
-            <a href="#">Search</a>
-        </nav>
-    </header>
-    <div class="main-container">
-        <h1>EAHaqual Unblocked</h1>
-        <p class="subtitle">Games, chat, and a whole lot more — all unblocked, all the time.</p>
-        <div class="search-section">
-            <h2>🔍 Search the Web</h2>
-            <p style="color: #9ca3af; font-size: 14px;">Enter a URL or search term — all traffic goes through your own proxy.</p>
-            <form id="proxy-form" class="search-box-container">
-                <input type="text" id="proxy-search" class="search-input" placeholder="https://example.com or search Google..." required>
-                <button type="submit" class="go-button">Go</button>
-            </form>
+
+    <!-- EMOJI CANVAS -->
+    <canvas id="emojiCanvas"></canvas>
+
+    <!-- NOTIFICATIONS -->
+    <div class="notification-container" id="notificationContainer"></div>
+
+    <!-- WELCOME POPUP -->
+    <div class="welcome-overlay" id="welcomeOverlay">
+        <div class="welcome-popup">
+            <span class="popup-icon">🎮</span>
+            <h2>Welcome to <span class="highlight">EAHaqual</span></h2>
+            <p>Your go-to unblocked games &amp; chat hub. Here's how to get started:</p>
+            <ul class="steps">
+                <li><strong>Pick a username</strong> — it's how others find you</li>
+                <li><strong>Play games</strong> — click any tile to launch instantly</li>
+                <li><strong>Chat with friends</strong> — share your code and connect</li>
+            </ul>
+            <button class="btn-primary" id="welcomeGotIt">Got it! 🚀</button>
         </div>
     </div>
-    <footer>EAHaqual Unblocked — made for the school network 🚀</footer>
-    <script>
-        document.getElementById('proxy-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const input = document.getElementById('proxy-search').value.trim();
-            let url = input;
-            if (!/^https?:\/\//i.test(url) && !url.includes('.')) {
-                url = 'https://google.com' + encodeURIComponent(input);
-            } else if (!/^https?:\/\//i.test(url)) {
-                url = 'http://' + url;
+
+    <!-- SETTINGS OVERLAY -->
+    <div class="settings-overlay" id="settingsOverlay">
+        <div class="settings-panel">
+            <div class="settings-header">
+                <h2>⚙️ Settings</h2>
+                <button class="settings-close" id="settingsClose">✕</button>
+            </div>
+            <!-- Settings content - same as before (all toggles, sliders, etc.) -->
+            <div class="settings-grid">
+                <div class="settings-group">
+                    <div class="group-title">🎨 Appearance</div>
+                    <div class="setting-row"><span class="setting-label">Dark Mode</span><label class="toggle-switch"><input type="checkbox" id="settingDarkMode" checked><span class="toggle-slider"></span></label></div>
+                    <div class="setting-row"><span class="setting-label">Background Color</span><input type="color" class="setting-color" id="settingBgColor" value="#0a0f1c"></div>
+                    <div class="setting-row"><span class="setting-label">Accent Color</span><input type="color" class="setting-color" id="settingAccentColor" value="#3b82f6"></div>
+                    <div class="setting-row"><span class="setting-label">Compact Mode</span><label class="toggle-switch"><input type="checkbox" id="settingCompact"><span class="toggle-slider"></span></label></div>
+                </div>
+                <div class="settings-group">
+                    <div class="group-title">✨ Effects</div>
+                    <div class="setting-row"><span class="setting-label">Falling Emojis</span><label class="toggle-switch"><input type="checkbox" id="settingEmojis" checked><span class="toggle-slider"></span></label></div>
+                    <div class="setting-row"><span class="setting-label">Emoji Speed</span><input type="range" id="settingEmojiSpeed" min="0.2" max="3" step="0.1" value="1"><span class="range-value" id="settingEmojiSpeedVal">1.0</span></div>
+                    <div class="setting-row"><span class="setting-label">Emoji Density</span><input type="range" id="settingEmojiDensity" min="1" max="8" step="1" value="4"><span class="range-value" id="settingEmojiDensityVal">4</span></div>
+                    <div class="setting-row"><span class="setting-label">Cursor Repel</span><input type="range" id="settingRepel" min="0" max="10" step="1" value="5"><span class="range-value" id="settingRepelVal">5</span></div>
+                    <div class="setting-row"><span class="setting-label">Animation Speed</span><input type="range" id="settingAnimSpeed" min="0.5" max="2" step="0.1" value="1"><span class="range-value" id="settingAnimSpeedVal">1.0</span></div>
+                </div>
+                <div class="settings-group">
+                    <div class="group-title">💬 Chat</div>
+                    <div class="setting-row"><span class="setting-label">Font Size</span><input type="range" id="settingChatFont" min="11" max="20" step="1" value="13"><span class="range-value" id="settingChatFontVal">13</span></div>
+                    <div class="setting-row"><span class="setting-label">Bubble Style</span><select class="setting-select" id="settingBubbleStyle"><option value="12">Rounded</option><option value="6">Square</option><option value="20">Pill</option><option value="4">Sharp</option></select></div>
+                    <div class="setting-row"><span class="setting-label">Sound Effects</span><label class="toggle-switch"><input type="checkbox" id="settingSounds" checked><span class="toggle-slider"></span></label></div>
+                    <div class="setting-row"><span class="setting-label">Notifications</span><label class="toggle-switch"><input type="checkbox" id="settingNotifs" checked><span class="toggle-slider"></span></label></div>
+                </div>
+                <div class="settings-group">
+                    <div class="group-title">🎮 Games</div>
+                    <div class="setting-row"><span class="setting-label">Game Quality</span><select class="setting-select" id="settingGameQuality"><option value="hd">HD</option><option value="standard" selected>Standard</option><option value="performance">Performance</option></select></div>
+                    <div class="setting-row"><span class="setting-label">Auto-Launch</span><label class="toggle-switch"><input type="checkbox" id="settingAutoLaunch"><span class="toggle-slider"></span></label></div>
+                    <div class="setting-row"><span class="setting-label">Show Online Status</span><label class="toggle-switch"><input type="checkbox" id="settingOnlineStatus" checked><span class="toggle-slider"></span></label></div>
+                </div>
+                <div class="settings-group full">
+                    <div class="group-title">⌨️ Hotkey Manager</div>
+                    <div class="hotkey-list" id="hotkeyList"></div>
+                    <div class="hotkey-add-row">
+                        <input type="text" id="hotkeyUrlInput" placeholder="URL (e.g. https://example.com)" style="flex:2;">
+                        <div class="hk-key-capture" id="hotkeyKeyCapture">🔑</div>
+                        <button class="btn-small" id="hotkeyAddBtn">Add</button>
+                    </div>
+                    <p style="font-size:11px;color:var(--text-muted);margin-top:6px;">Click the key box, then press any key to assign. Pressing that key anywhere on the site will open the URL.</p>
+                </div>
+                <div class="settings-group full">
+                    <div class="group-title">⚙️ System</div>
+                    <div class="settings-actions">
+                        <button class="btn-secondary" id="settingsReset">↺ Reset All Settings</button>
+                        <button class="btn-secondary" id="settingsExport">📤 Export</button>
+                        <button class="btn-secondary" id="settingsImport">📥 Import</button>
+                        <button class="btn-secondary btn-danger" id="settingsClearData">🗑️ Clear All Data</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="container">
+        <div class="header">
+            <a href="#" class="brand" onclick="switchTab('home')">
+                <span class="brand-icon">🎮</span>
+                <div class="brand-text">
+                    <span class="brand-name">EAHaqual</span>
+                    <span class="brand-tag">unblocked</span>
+                </div>
+            </a>
+            <div class="nav-tabs" role="tablist">
+                <button class="nav-tab active" data-tab="home" role="tab">Home</button>
+                <button class="nav-tab" data-tab="games" role="tab">Games</button>
+                <button class="nav-tab" data-tab="chat" role="tab">Chat</button>
+                <button class="nav-tab" data-tab="search" role="tab">🔍 Search</button>
+            </div>
+            <div class="header-actions">
+                <button class="settings-toggle" id="settingsToggle" aria-label="Settings">⚙️</button>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- HOME -->
+        <section class="panel active" id="panel-home">
+            <div class="home-section">
+                <h1 class="sr-only">EAHaqual Unblocked</h1>
+                <div class="hero-logo-text">EAHaqual</div>
+                <div class="hero-logo-sub">Unblocked Hub</div>
+                <p class="home-subtitle">Games, chat, and a whole lot more — all unblocked, all the time.</p>
+                <div class="status-pill">
+                    <span class="status-dot"></span>
+                    <span>🟢 <span id="onlineCount">0</span> online now</span>
+                </div>
+                <div class="player-card" id="playerCard">
+                    <div class="player-card-header">
+                        <span class="badge">🎮</span>
+                        <span>Your Profile</span>
+                    </div>
+                    <div id="playerForm">
+                        <div class="player-row">
+                            <input id="nicknameInput" maxlength="18" placeholder="Choose a username">
+                            <button class="btn-primary" id="saveNickname">Save</button>
+                        </div>
+                        <p class="player-note" id="playerHint">Pick a name to unlock chat and save your progress.</p>
+                    </div>
+                    <div id="welcomeBack" hidden>
+                        <div class="welcome-back">
+                            <p>👋 <span id="welcomeText"></span></p>
+                            <p class="player-note">Your code: <span class="code-display" id="myCode">••••••</span> — share to connect</p>
+                            <button class="forget-link" id="forgetNickname">✕ Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GAMES -->
+        <section class="panel" id="panel-games">
+            <div class="games-section">
+                <div class="games-header">
+                    <h2>🎮 Games</h2>
+                    <p>Click any game to play instantly — no downloads, no limits.</p>
+                </div>
+                <div class="games-grid" id="gamesGrid"></div>
+            </div>
+        </section>
+
+        <!-- CHAT -->
+        <section class="panel" id="panel-chat">
+            <div class="chat-section">
+                <div class="chat-header">
+                    <h2>💬 Chat</h2>
+                    <p>Real-time 1:1 and group chat with instant sync.</p>
+                </div>
+                <div class="chat-container">
+                    <div class="chat-sidebar">
+                        <div class="chat-sidebar-title">Conversations</div>
+                        <div class="chat-convo-list" id="chatConvoList"></div>
+                        <button class="chat-new-btn" id="chatNewBtn">+ New Chat</button>
+                    </div>
+                    <div class="chat-main">
+                        <div class="chat-main-header">
+                            <span class="chat-title" id="chatTitle">💬 Select a chat</span>
+                            <div class="chat-actions" id="chatActions" hidden>
+                                <span class="chat-code-chip" id="groupCodeDisplay" hidden style="font-size:11px;color:var(--text-muted);margin-right:6px;">code: <strong id="groupCodeText" style="color:var(--accent-cyan);font-family:monospace;"></strong></span>
+                                <button class="chat-action-btn" id="chatMembersBtn" hidden>👥</button>
+                                <button class="chat-action-btn" id="chatLeaveBtn">✕ Leave</button>
+                            </div>
+                        </div>
+                        <div class="chat-members-panel" id="chatMembersPanel" hidden></div>
+                        <div class="chat-body">
+                            <div class="chat-gate" id="chatGate">
+                                <p class="player-note" style="font-size:13px;">Your code: <strong id="myCodeGate" style="color:var(--accent-cyan);font-family:monospace;font-size:16px;">••••••</strong> — share this to chat 1:1</p>
+                                <div class="chat-gate-section">
+                                    <div class="section-label">💬 1:1 Chat</div>
+                                    <p class="section-desc">Enter a friend's code to start a private chat.</p>
+                                    <div class="player-row">
+                                        <input id="friendCodeInput" maxlength="6" placeholder="Friend's code">
+                                        <button class="btn-primary" id="friendCodeGo">Connect</button>
+                                    </div>
+                                </div>
+                                <div class="chat-gate-section">
+                                    <div class="section-label">👥 Group Chat</div>
+                                    <p class="section-desc">Create a group or join one with a code.</p>
+                                    <div class="player-row" style="margin-bottom:6px;">
+                                        <input id="groupNameInput" maxlength="24" placeholder="Group name">
+                                        <button class="btn-primary" id="createGroupBtn">Create</button>
+                                    </div>
+                                    <div class="player-row">
+                                        <input id="groupCodeInput" maxlength="6" placeholder="Group code">
+                                        <button class="btn-primary" id="joinGroupBtn">Join</button>
+                                    </div>
+                                </div>
+                                <p class="player-note" id="chatGateHint" style="color:var(--accent-amber);"></p>
+                            </div>
+                            <div class="chat-room" id="chatRoom">
+                                <div class="chat-messages" id="chatMessages"></div>
+                                <div class="chat-input-row">
+                                    <input id="chatInput" maxlength="200" placeholder="Type a message...">
+                                    <button class="btn-primary" id="chatSend">Send</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEARCH (GUST Proxy) -->
+        <section class="panel" id="panel-search">
+            <div class="search-section">
+                <div class="search-header">
+                    <h2>🔍 Search the Web</h2>
+                    <p>Enter a URL or search term – all traffic goes through the GUST proxy.</p>
+                </div>
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="example.com or search term...">
+                    <button class="btn-primary" id="searchGo">Go</button>
+                    <button class="btn-primary btn-amber" id="searchOpenTab">↗ Open in new tab</button>
+                </div>
+                <iframe id="searchFrame" src="about:blank"></iframe>
+            </div>
+        </section>
+    </main>
+
+    <!-- GAME PLAYER -->
+    <div class="game-player" id="gamePlayer">
+        <div class="game-player-header">
+            <span class="title" id="gamePlayerTitle">Game</span>
+            <button class="game-player-close" id="gamePlayerClose">✕ Close</button>
+        </div>
+        <iframe id="gamePlayerFrame" src="about:blank" title="Game"></iframe>
+    </div>
+
+    <footer class="footer container">
+        <p>EAHaqual Unblocked — made for the school network 🚀</p>
+    </footer>
+
+    <!-- ===== IMPORTS ===== -->
+    <script type="importmap">
+        {
+            "imports": {
+                "firebase/app": "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js",
+                "firebase/auth": "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js",
+                "firebase/firestore": "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"
             }
-            if ('serviceWorker' in navigator) {
-                try {
-                    await navigator.serviceWorker.register('/uv.sw.js', {
-                        scope: __uv$config.prefix
-                    });
-                    const encodedUrl = __uv$config.prefix + __uv$config.encodeUrl(url);
-                    window.location.href = encodedUrl;
-                } catch (err) {
-                    alert('Error connecting proxy engine: ' + err.message);
+        }
+    </script>
+
+    <script type="module">
+        // ===== FIREBASE IMPORTS =====
+        import { initializeApp } from "firebase/app";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "firebase/auth";
+        import {
+            getFirestore, collection, addDoc, query, where, orderBy, limit,
+            onSnapshot, serverTimestamp, doc, setDoc, getDoc,
+            updateDoc, arrayUnion, arrayRemove, deleteField, getCountFromServer
+        } from "firebase/firestore";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBQWW9MwVoDCFb2hbnabjIRMWmGeHPWVXg",
+            authDomain: "eahaqual-unblocked.firebaseapp.com",
+            projectId: "eahaqual-unblocked",
+            storageBucket: "eahaqual-unblocked.firebasestorage.app",
+            messagingSenderId: "140217067528",
+            appId: "1:140217067528:web:be54fe0eeba35d428449bd"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // ===== NOTIFICATION =====
+        const notificationContainer = document.getElementById('notificationContainer');
+
+        function showNotification(title, body, type = 'message') {
+            const toast = document.createElement('div');
+            const icons = { message: '💬', join: '👋', leave: '🚪', system: '📢' };
+            toast.className = `notification-toast ${type}`;
+            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            toast.innerHTML = `
+                <span class="notif-icon">${icons[type] || '📢'}</span>
+                <div class="notif-content">
+                    <div class="notif-title">${title}</div>
+                    <div class="notif-body">${body}</div>
+                    <span class="notif-time">${time}</span>
+                </div>
+                <button class="notif-close">✕</button>
+            `;
+            toast.querySelector('.notif-close').addEventListener('click', () => {
+                toast.style.animation = 'slideOutRight 0.3s ease forwards';
+                setTimeout(() => toast.remove(), 300);
+            });
+            notificationContainer.appendChild(toast);
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.style.animation = 'slideOutRight 0.3s ease forwards';
+                    setTimeout(() => toast.remove(), 300);
                 }
-            } else {
-                alert('Your browser does not support Service Workers.');
+            }, 5000);
+        }
+
+        // ===== GAMES =====
+        const GAMES = [
+            { id: 'roll', title: 'Slope Rolling',
+            url: 'https://html5.gamedistribution.com/0022998ce3c54962be6ffe178229b168/?gd_sdk_referrer_url=https://eahaqual-unblocked.web.app/',
+            img: 'https://www.onlinegames.io/media/posts/961/Slope-Rolling.jpg' },
+            { id: 'bike', title: 'Bike Rush',
+            url: 'https://html5.gamedistribution.com/c23f50871019481f99d1ce3d56571dfd/?gd_sdk_referrer_url=https://eahaqual-unblocked.web.app/',
+            img: 'https://www.onlinegames.io/media/posts/1091/italian-brainrot-bike-rush.webp' },
+            { id: 'boat', title: 'Boat Racing',
+            url: 'https://html5.gamedistribution.com/f4b1cfeb63274fcd9e11df58a55c72ee/?gd_sdk_referrer_url=https://eahaqual-unblocked.web.app/',
+            img: 'https://www.onlinegames.io/media/posts/1359/boat-game-racing-simulator-3d.webp' },
+            { id: 'gta', title: 'Stickman GTA', url: 'https://cloud.onlinegames.io/games/2024/unity3/stickman-gta-city/index-og.html',
+                img: 'https://www.onlinegames.io/media/posts/900/stickman-gta-city-free.jpg' },
+            { id: 'football', title: 'Football Heads',
+            url: 'https://html5.gamedistribution.com/e28358852075425e9d70f65e90a9c34f/?gd_sdk_referrer_url=https://eahaqual-unblocked.web.app/',
+            img: 'https://www.onlinegames.io/media/posts/1362/football-heads-2026.webp' },
+            { id: 'flight', title: 'Flight Sim', url: 'https://cloud.onlinegames.io/games/2023/unity2/real-flight-simulator/index.html',
+                img: 'https://www.onlinegames.io/media/posts/342/Real-Flight-Simulator-2.jpg' },
+            { id: 'clicker', title: '67 Clicker',
+            url: 'https://html5.gamedistribution.com/7fcb55f25f4a4a07848c630dffe1ae6e/?gd_sdk_referrer_url=https://eahaqual-unblocked.web.app/',
+            img: 'https://www.onlinegames.io/media/posts/1351/67-clicker-tap-tap-2.webp' },
+            { id: 'famidash', title: 'FamiDash', url: 'https://cloud.onlinegames.io/games/2026/em/famidash/index.html',
+                img: 'https://www.onlinegames.io/media/posts/1275/famidash.webp' },
+            { id: 'granny', title: 'Granny',
+            url: 'https://playhop.com/app/307198?utm_source=distrib&is-united-page=1&skip-guard=1&header=no&utm_medium=cristian-ovidiu&clid=8531463',
+            img: 'https://www.onlinegames.io/media/posts/884/granny.jpg' },
+            { id: '1v1lol', title: '1v1.LOL', url: 'https://db.duckmath.org/html/1v1lol/',
+                img: 'https://www.onlinegames.io/media/posts/379/1v1.LOL-Online.jpg' },
+            { id: 'freezeria', title: "Papa's Freezeria", url: 'https://www.onlinegames.io/games/2024/flash2/papas-freezeria/',
+                img: 'https://www.onlinegames.io/media/posts/813/Papas-Freezeria.jpg' },
+            { id: 'firewater', title: 'Fireboy & Watergirl',
+            url: 'https://html5.gamedistribution.com/a55c9cc9c21e4fc683c8c6857f3d0c75/?gd_sdk_referrer_url=https://eahaqual-unblocked.web.app/',
+            img: 'https://www.onlinegames.io/media/posts/377/Fireboy-and-Watergirl-Online.jpg' }
+        ];
+
+        const gamesGrid = document.getElementById('gamesGrid');
+        GAMES.forEach(game => {
+            const tile = document.createElement('div');
+            tile.className = 'game-tile';
+            tile.dataset.url = game.url;
+            tile.dataset.title = game.title;
+            tile.setAttribute('role', 'button');
+            tile.setAttribute('tabindex', '0');
+            tile.innerHTML = `
+                <img src="${game.img}" alt="${game.title}" loading="lazy" onerror="this.style.display='none'">
+                <div class="tile-overlay"></div>
+                <span class="tile-label">${game.title}</span>
+            `;
+            tile.addEventListener('click', () => openGame(game.url, game.title));
+            tile.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault();
+                    openGame(game.url, game.title); } });
+            gamesGrid.appendChild(tile);
+        });
+
+        const gamePlayer = document.getElementById('gamePlayer');
+        const gamePlayerFrame = document.getElementById('gamePlayerFrame');
+        const gamePlayerTitle = document.getElementById('gamePlayerTitle');
+        const gamePlayerClose = document.getElementById('gamePlayerClose');
+
+        function openGame(url, title) {
+            gamePlayerTitle.textContent = title || 'Game';
+            gamePlayerFrame.src = url;
+            gamePlayer.classList.add('open');
+        }
+
+        function closeGame() {
+            gamePlayer.classList.remove('open');
+            gamePlayerFrame.src = 'about:blank';
+        }
+        gamePlayerClose.addEventListener('click', closeGame);
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && gamePlayer.classList.contains('open'))
+            closeGame(); });
+
+        // ===== THEME =====
+        const themeToggle = document.getElementById('themeToggle');
+        let darkMode = true;
+        themeToggle.addEventListener('click', () => {
+            darkMode = !darkMode;
+            document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
+            themeToggle.textContent = darkMode ? '🌙' : '☀️';
+        });
+
+        // ===== TABS =====
+        const tabs = document.querySelectorAll('.nav-tab');
+        const panels = {
+            home: document.getElementById('panel-home'),
+            games: document.getElementById('panel-games'),
+            chat: document.getElementById('panel-chat'),
+            search: document.getElementById('panel-search')
+        };
+
+        window.switchTab = function(tab) {
+            tabs.forEach(t => {
+                t.classList.toggle('active', t.dataset.tab === tab);
+                t.setAttribute('aria-selected', t.dataset.tab === tab);
+            });
+            Object.entries(panels).forEach(([key, el]) => {
+                el.classList.toggle('active', key === tab);
+            });
+            if (tab === 'chat' && typeof window.onChatOpened === 'function') window.onChatOpened();
+        };
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = tab.dataset.tab;
+                if (target === 'chat' && typeof window.requireUsername === 'function' && !window.requireUsername()) {
+                    return;
+                }
+                window.switchTab(target);
+            });
+        });
+
+        // ===== WELCOME =====
+        const welcomeOverlay = document.getElementById('welcomeOverlay');
+        const welcomeGotIt = document.getElementById('welcomeGotIt');
+        if (!sessionStorage.getItem('welcomeShown')) {
+            setTimeout(() => { welcomeOverlay.classList.add('open'); }, 600);
+        }
+        welcomeGotIt.addEventListener('click', () => {
+            welcomeOverlay.classList.remove('open');
+            sessionStorage.setItem('welcomeShown', 'true');
+        });
+        welcomeOverlay.addEventListener('click', (e) => {
+            if (e.target === welcomeOverlay) {
+                welcomeOverlay.classList.remove('open');
+                sessionStorage.setItem('welcomeShown', 'true');
             }
         });
+
+        // ===== SETTINGS =====
+        const settingsToggle = document.getElementById('settingsToggle');
+        const settingsOverlay = document.getElementById('settingsOverlay');
+        const settingsClose = document.getElementById('settingsClose');
+
+        settingsToggle.addEventListener('click', () => settingsOverlay.classList.toggle('open'));
+        settingsClose.addEventListener('click', () => settingsOverlay.classList.remove('open'));
+        settingsOverlay.addEventListener('click', (e) => { if (e.target === settingsOverlay) settingsOverlay.classList.remove(
+                'open'); });
+
+        // ===== HOTKEYS =====
+        let hotkeys = JSON.parse(localStorage.getItem('eahaqual_hotkeys') || '[]');
+        let captureKey = null;
+
+        function renderHotkeys() {
+            const list = document.getElementById('hotkeyList');
+            list.innerHTML = '';
+            hotkeys.forEach((hk, i) => {
+                const div = document.createElement('div');
+                div.className = 'hotkey-item';
+                div.innerHTML = `
+                    <span class="hk-key">${hk.key}</span>
+                    <span class="hk-url">${hk.url}</span>
+                    <button class="hk-remove" data-index="${i}">✕</button>
+                `;
+                div.querySelector('.hk-remove').addEventListener('click', () => {
+                    hotkeys.splice(i, 1);
+                    localStorage.setItem('eahaqual_hotkeys', JSON.stringify(hotkeys));
+                    renderHotkeys();
+                });
+                list.appendChild(div);
+            });
+        }
+        renderHotkeys();
+
+        const keyCapture = document.getElementById('hotkeyKeyCapture');
+        keyCapture.addEventListener('click', () => {
+            keyCapture.classList.toggle('active');
+            if (keyCapture.classList.contains('active')) {
+                keyCapture.textContent = '⌨️';
+                captureKey = '';
+            } else {
+                keyCapture.textContent = '🔑';
+                captureKey = null;
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (keyCapture.classList.contains('active')) {
+                e.preventDefault();
+                const key = e.key.length === 1 ? e.key.toUpperCase() : e.key;
+                if (key === 'Escape') { keyCapture.classList.remove('active');
+                    keyCapture.textContent = '🔑';
+                    captureKey = null; return; }
+                captureKey = key;
+                keyCapture.textContent = key;
+                keyCapture.classList.remove('active');
+                return;
+            }
+            const key = e.key.length === 1 ? e.key.toUpperCase() : e.key;
+            const match = hotkeys.find(h => h.key === key);
+            if (match && !e.ctrlKey && !e.metaKey && !e.altKey && e.target.tagName !== 'INPUT' && e.target.tagName !==
+                'TEXTAREA' && e.target.tagName !== 'SELECT') {
+                e.preventDefault();
+                window.open(match.url, '_blank');
+            }
+        });
+
+        document.getElementById('hotkeyAddBtn').addEventListener('click', () => {
+            const url = document.getElementById('hotkeyUrlInput').value.trim();
+            if (!url || !captureKey) return;
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                alert('Please enter a valid URL starting with http:// or https://');
+                return;
+            }
+            if (hotkeys.some(h => h.key === captureKey)) {
+                alert(`Key "${captureKey}" is already assigned.`);
+                return;
+            }
+            hotkeys.push({ key: captureKey, url });
+            localStorage.setItem('eahaqual_hotkeys', JSON.stringify(hotkeys));
+            renderHotkeys();
+            document.getElementById('hotkeyUrlInput').value = '';
+            captureKey = null;
+            keyCapture.textContent = '🔑';
+        });
+
+        // Settings reset/export/import/clear (simplified, but functional)
+        document.getElementById('settingsReset').addEventListener('click', () => {
+            localStorage.removeItem('eahaqual_hotkeys');
+            hotkeys = [];
+            renderHotkeys();
+            document.getElementById('settingDarkMode').checked = true;
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeToggle.textContent = '🌙';
+            darkMode = true;
+            document.getElementById('settingBgColor').value = '#0a0f1c';
+            document.documentElement.style.setProperty('--custom-bg', 'transparent');
+            document.getElementById('settingAccentColor').value = '#3b82f6';
+            document.documentElement.style.setProperty('--custom-accent', '#3b82f6');
+            document.querySelector('meta[name="theme-color"]').content = '#0a0f1c';
+            document.getElementById('settingEmojis').checked = true;
+            document.documentElement.style.setProperty('--emoji-opacity', '1');
+            document.getElementById('settingEmojiSpeed').value = 1;
+            document.getElementById('settingEmojiSpeedVal').textContent = '1.0';
+            document.documentElement.style.setProperty('--emoji-speed', '1');
+            document.getElementById('settingEmojiDensity').value = 4;
+            document.getElementById('settingEmojiDensityVal').textContent = '4';
+            document.documentElement.style.setProperty('--emoji-density', '1');
+            document.getElementById('settingRepel').value = 5;
+            document.getElementById('settingRepelVal').textContent = '5';
+            document.documentElement.style.setProperty('--repel-strength', '1');
+            document.getElementById('settingAnimSpeed').value = 1;
+            document.getElementById('settingAnimSpeedVal').textContent = '1.0';
+            document.documentElement.style.setProperty('--animation-speed', '1');
+            document.getElementById('settingChatFont').value = 13;
+            document.getElementById('settingChatFontVal').textContent = '13';
+            document.documentElement.style.setProperty('--chat-font-size', '13px');
+            document.getElementById('settingBubbleStyle').value = '12';
+            document.documentElement.style.setProperty('--chat-bubble-radius', '12px');
+            document.getElementById('settingSounds').checked = true;
+            document.getElementById('settingNotifs').checked = true;
+            document.getElementById('settingGameQuality').value = 'standard';
+            document.getElementById('settingAutoLaunch').checked = false;
+            document.getElementById('settingOnlineStatus').checked = true;
+            document.getElementById('settingCompact').checked = false;
+            location.reload();
+        });
+
+        document.getElementById('settingsExport').addEventListener('click', () => {
+            const data = {
+                hotkeys: hotkeys,
+                settings: {
+                    darkMode: darkMode,
+                    emojis: document.getElementById('settingEmojis').checked,
+                    emojiSpeed: document.getElementById('settingEmojiSpeed').value,
+                    emojiDensity: document.getElementById('settingEmojiDensity').value,
+                    repel: document.getElementById('settingRepel').value,
+                    animSpeed: document.getElementById('settingAnimSpeed').value,
+                    chatFont: document.getElementById('settingChatFont').value,
+                    bubbleStyle: document.getElementById('settingBubbleStyle').value,
+                    sounds: document.getElementById('settingSounds').checked,
+                    notifs: document.getElementById('settingNotifs').checked,
+                    gameQuality: document.getElementById('settingGameQuality').value,
+                    autoLaunch: document.getElementById('settingAutoLaunch').checked,
+                    onlineStatus: document.getElementById('settingOnlineStatus').checked,
+                    compact: document.getElementById('settingCompact').checked,
+                    bgColor: document.getElementById('settingBgColor').value,
+                    accentColor: document.getElementById('settingAccentColor').value
+                }
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'eahaqual-settings.json';
+            a.click();
+            URL.revokeObjectURL(a.href);
+        });
+
+        document.getElementById('settingsImport').addEventListener('click', () => {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    try {
+                        const data = JSON.parse(ev.target.result);
+                        if (data.hotkeys) { hotkeys = data.hotkeys;
+                            localStorage.setItem('eahaqual_hotkeys', JSON.stringify(hotkeys));
+                            renderHotkeys(); }
+                        if (data.settings) {
+                            const s = data.settings;
+                            if (s.darkMode !== undefined) { darkMode = s.darkMode;
+                                document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
+                                themeToggle.textContent = darkMode ? '🌙' : '☀️'; }
+                            if (s.emojis !== undefined) document.getElementById('settingEmojis').checked = s.emojis;
+                            if (s.emojiSpeed !== undefined) { document.getElementById('settingEmojiSpeed').value = s
+                                    .emojiSpeed;
+                                document.getElementById('settingEmojiSpeedVal').textContent = s.emojiSpeed;
+                                document.documentElement.style.setProperty('--emoji-speed', s.emojiSpeed); }
+                            if (s.emojiDensity !== undefined) { document.getElementById('settingEmojiDensity').value = s
+                                    .emojiDensity;
+                                document.getElementById('settingEmojiDensityVal').textContent = s.emojiDensity;
+                                document.documentElement.style.setProperty('--emoji-density', s.emojiDensity / 4); }
+                            if (s.repel !== undefined) { document.getElementById('settingRepel').value = s.repel;
+                                document.getElementById('settingRepelVal').textContent = s.repel;
+                                document.documentElement.style.setProperty('--repel-strength', s.repel / 5); }
+                            if (s.animSpeed !== undefined) { document.getElementById('settingAnimSpeed').value = s
+                                    .animSpeed;
+                                document.getElementById('settingAnimSpeedVal').textContent = s.animSpeed;
+                                document.documentElement.style.setProperty('--animation-speed', s.animSpeed); }
+                            if (s.chatFont !== undefined) { document.getElementById('settingChatFont').value = s
+                                    .chatFont;
+                                document.getElementById('settingChatFontVal').textContent = s.chatFont;
+                                document.documentElement.style.setProperty('--chat-font-size', s.chatFont + 'px'); }
+                            if (s.bubbleStyle !== undefined) { document.getElementById('settingBubbleStyle').value = s
+                                    .bubbleStyle;
+                                document.documentElement.style.setProperty('--chat-bubble-radius', s.bubbleStyle +
+                                'px'); }
+                            if (s.sounds !== undefined) document.getElementById('settingSounds').checked = s.sounds;
+                            if (s.notifs !== undefined) document.getElementById('settingNotifs').checked = s.notifs;
+                            if (s.gameQuality !== undefined) document.getElementById('settingGameQuality').value = s
+                                .gameQuality;
+                            if (s.autoLaunch !== undefined) document.getElementById('settingAutoLaunch').checked = s
+                                .autoLaunch;
+                            if (s.onlineStatus !== undefined) document.getElementById('settingOnlineStatus').checked =
+                                s.onlineStatus;
+                            if (s.compact !== undefined) document.getElementById('settingCompact').checked = s
+                                .compact;
+                            if (s.bgColor) { document.getElementById('settingBgColor').value = s.bgColor;
+                                document.documentElement.style.setProperty('--custom-bg', s.bgColor); }
+                            if (s.accentColor) { document.getElementById('settingAccentColor').value = s.accentColor;
+                                document.documentElement.style.setProperty('--custom-accent', s.accentColor); }
+                        }
+                        alert('Settings imported successfully!');
+                    } catch (err) { alert('Invalid file format'); }
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        });
+
+        document.getElementById('settingsClearData').addEventListener('click', () => {
+            if (confirm('Clear all local data? This will remove hotkeys and settings.')) {
+                localStorage.clear();
+                location.reload();
+            }
+        });
+
+        // Settings live updates
+        document.getElementById('settingDarkMode').addEventListener('change', function() {
+            darkMode = this.checked;
+            document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
+            themeToggle.textContent = darkMode ? '🌙' : '☀️';
+        });
+        document.getElementById('settingBgColor').addEventListener('input', function() {
+            document.documentElement.style.setProperty('--custom-bg', this.value);
+        });
+        document.getElementById('settingAccentColor').addEventListener('input', function() {
+            document.documentElement.style.setProperty('--custom-accent', this.value);
+            document.querySelector('meta[name="theme-color"]').content = this.value;
+        });
+        document.getElementById('settingEmojis').addEventListener('change', function() {
+            document.documentElement.style.setProperty('--emoji-opacity', this.checked ? '1' : '0');
+        });
+        document.getElementById('settingEmojiSpeed').addEventListener('input', function() {
+            document.getElementById('settingEmojiSpeedVal').textContent = this.value;
+            document.documentElement.style.setProperty('--emoji-speed', this.value);
+        });
+        document.getElementById('settingEmojiDensity').addEventListener('input', function() {
+            document.getElementById('settingEmojiDensityVal').textContent = this.value;
+            document.documentElement.style.setProperty('--emoji-density', this.value / 4);
+        });
+        document.getElementById('settingRepel').addEventListener('input', function() {
+            document.getElementById('settingRepelVal').textContent = this.value;
+            document.documentElement.style.setProperty('--repel-strength', this.value / 5);
+        });
+        document.getElementById('settingAnimSpeed').addEventListener('input', function() {
+            document.getElementById('settingAnimSpeedVal').textContent = this.value;
+            document.documentElement.style.setProperty('--animation-speed', this.value);
+        });
+        document.getElementById('settingChatFont').addEventListener('input', function() {
+            document.getElementById('settingChatFontVal').textContent = this.value;
+            document.documentElement.style.setProperty('--chat-font-size', this.value + 'px');
+        });
+        document.getElementById('settingBubbleStyle').addEventListener('change', function() {
+            document.documentElement.style.setProperty('--chat-bubble-radius', this.value + 'px');
+        });
+        document.getElementById('settingCompact').addEventListener('change', function() {
+            const root = document.documentElement;
+            if (this.checked) {
+                root.style.setProperty('--radius', '8px');
+                root.style.setProperty('--radius-sm', '6px');
+                root.style.setProperty('--shadow-soft', '0 2px 10px rgba(0,0,0,0.2)');
+                root.style.setProperty('--shadow-lift', '0 8px 24px rgba(0,0,0,0.3)');
+            } else {
+                root.style.setProperty('--radius', '14px');
+                root.style.setProperty('--radius-sm', '10px');
+                root.style.setProperty('--shadow-soft', '0 6px 20px rgba(0,0,0,0.3)');
+                root.style.setProperty('--shadow-lift', '0 16px 36px rgba(0,0,0,0.4)');
+            }
+        });
+
+        // ===== EMOJI CANVAS =====
+        const canvas = document.getElementById('emojiCanvas');
+        const ctx = canvas.getContext('2d');
+        let emojis = [];
+        let W, H;
+        const emojiList = ['🎮', '🚀', '⚡', '🔥', '💎', '🌈', '🌀', '⭐', '🌊', '🎯', '💫', '🌟', '✨', '⚽', '🏀', '🎱', '🕹️', '🎲'];
+
+        function resizeCanvas() {
+            W = canvas.width = window.innerWidth;
+            H = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        let mouseX = -9999, mouseY = -9999;
+        document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+        document.addEventListener('mouseleave', () => { mouseX = -9999; mouseY = -9999; });
+
+        function initEmojis() {
+            const count = Math.floor(20 * parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--emoji-density')) || 4);
+            emojis = [];
+            for (let i = 0; i < count; i++) {
+                emojis.push({
+                    x: Math.random() * W,
+                    y: Math.random() * H - H,
+                    size: 18 + Math.random() * 28,
+                    speed: 0.3 + Math.random() * 0.7,
+                    emoji: emojiList[Math.floor(Math.random() * emojiList.length)],
+                    wobble: Math.random() * Math.PI * 2,
+                    wobbleSpeed: 0.01 + Math.random() * 0.02
+                });
+            }
+        }
+        initEmojis();
+
+        let lastTime = 0;
+
+        function drawEmojis(timestamp) {
+            const dt = Math.min((timestamp - lastTime) / 16, 3);
+            lastTime = timestamp;
+            const speedMul = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--emoji-speed')) || 1;
+            const repel = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--repel-strength')) || 1;
+
+            ctx.clearRect(0, 0, W, H);
+
+            emojis.forEach(e => {
+                e.y += e.speed * dt * 0.6 * speedMul;
+                e.wobble += e.wobbleSpeed * dt;
+                e.x += Math.sin(e.wobble) * 0.15 * dt;
+
+                const dx = e.x - mouseX;
+                const dy = e.y - mouseY;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 120 && dist > 0) {
+                    const force = (120 - dist) / 120 * repel * 2.5;
+                    e.x += (dx / dist) * force * dt * 0.4;
+                    e.y += (dy / dist) * force * dt * 0.4;
+                }
+
+                if (e.y > H + 50) { e.y = -50; e.x = Math.random() * W; }
+                if (e.x < -50) e.x = W + 50;
+                if (e.x > W + 50) e.x = -50;
+
+                ctx.font = `${e.size}px sans-serif`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.globalAlpha = 0.7 + Math.sin(e.wobble) * 0.15;
+                ctx.fillText(e.emoji, e.x, e.y);
+            });
+
+            const enabled = getComputedStyle(document.documentElement).getPropertyValue('--emoji-opacity') !== '0';
+            if (enabled) requestAnimationFrame(drawEmojis);
+        }
+
+        let emojiRunning = true;
+        document.getElementById('settingEmojis').addEventListener('change', function() {
+            if (this.checked) {
+                document.documentElement.style.setProperty('--emoji-opacity', '1');
+                if (!emojiRunning) { emojiRunning = true; requestAnimationFrame(drawEmojis); }
+            } else {
+                document.documentElement.style.setProperty('--emoji-opacity', '0');
+                emojiRunning = false;
+            }
+        });
+
+        // ===== CHAT STATE =====
+        let currentUid = null;
+        let currentName = '';
+        let usernameSet = false;
+        let myCode = null;
+        let dmDocs = new Map();
+        let groupDocs = new Map();
+        let conversations = [];
+        let activeConvoId = null;
+        let justOpenedConvoId = null;
+        let dmLoaded = false;
+        let groupLoaded = false;
+        let unsubscribeMessages = null;
+
+        const nicknameInput = document.getElementById('nicknameInput');
+        const saveBtn = document.getElementById('saveNickname');
+        const playerForm = document.getElementById('playerForm');
+        const welcomeBack = document.getElementById('welcomeBack');
+        const welcomeText = document.getElementById('welcomeText');
+        const forgetBtn = document.getElementById('forgetNickname');
+        const playerHint = document.getElementById('playerHint');
+        const myCodeEl = document.getElementById('myCode');
+        const myCodeGateEl = document.getElementById('myCodeGate');
+        const chatGate = document.getElementById('chatGate');
+        const chatRoom = document.getElementById('chatRoom');
+        const chatTitle = document.getElementById('chatTitle');
+        const chatActions = document.getElementById('chatActions');
+        const groupCodeDisplay = document.getElementById('groupCodeDisplay');
+        const groupCodeText = document.getElementById('groupCodeText');
+        const chatMembersBtn = document.getElementById('chatMembersBtn');
+        const chatMembersPanel = document.getElementById('chatMembersPanel');
+        const chatLeaveBtn = document.getElementById('chatLeaveBtn');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const chatSend = document.getElementById('chatSend');
+        const chatConvoList = document.getElementById('chatConvoList');
+        const chatNewBtn = document.getElementById('chatNewBtn');
+        const chatGateHint = document.getElementById('chatGateHint');
+        const friendCodeInput = document.getElementById('friendCodeInput');
+        const friendCodeGo = document.getElementById('friendCodeGo');
+        const groupNameInput = document.getElementById('groupNameInput');
+        const createGroupBtn = document.getElementById('createGroupBtn');
+        const groupCodeInput = document.getElementById('groupCodeInput');
+        const joinGroupBtn = document.getElementById('joinGroupBtn');
+        const onlineCount = document.getElementById('onlineCount');
+
+        function generateCode() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let out = '';
+            for (let i = 0; i < 6; i++) out += chars[Math.floor(Math.random() * chars.length)];
+            return out;
+        }
+
+        function roomIdFor(a, b) { return [a, b].sort().join('_'); }
+
+        window.requireUsername = function() {
+            if (usernameSet) return true;
+            playerHint.textContent = '⚠️ Set a username first to chat!';
+            if (nicknameInput) nicknameInput.focus();
+            return false;
+        };
+        window.resetUsername = function() {
+            currentName = '';
+            usernameSet = false;
+        };
+
+        async function saveNickname() {
+            const name = nicknameInput.value.trim();
+            if (!name) { nicknameInput.focus(); return; }
+            if (!currentUid) { playerHint.textContent = '⏳ Connecting...'; return; }
+            saveBtn.disabled = true;
+            try {
+                await setDoc(doc(db, 'players', currentUid), { name, updatedAt: serverTimestamp() }, { merge: true });
+                currentName = name;
+                usernameSet = true;
+                showWelcome(name);
+                playerHint.textContent = '✅ Saved!';
+            } catch (err) {
+                console.error(err);
+                playerHint.textContent = '❌ Failed to save';
+            } finally {
+                saveBtn.disabled = false;
+            }
+        }
+        saveBtn.addEventListener('click', saveNickname);
+        nicknameInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') saveNickname(); });
+
+        function showWelcome(name) {
+            welcomeText.textContent = `Welcome back, ${name}!`;
+            playerForm.hidden = true;
+            welcomeBack.hidden = false;
+        }
+
+        function showForm() {
+            playerForm.hidden = false;
+            welcomeBack.hidden = true;
+            nicknameInput.value = '';
+        }
+        forgetBtn.addEventListener('click', async () => {
+            if (currentUid) { try { await updateDoc(doc(db, 'players', currentUid), { name: deleteField() }); } catch (e) {} }
+            currentName = '';
+            usernameSet = false;
+            showForm();
+        });
+
+        function renderConvos() {
+            chatConvoList.innerHTML = '';
+            conversations.forEach(convo => {
+                const btn = document.createElement('button');
+                btn.className = 'chat-convo-item' + (convo.convoId === activeConvoId ? ' active' : '');
+                btn.type = 'button';
+                const icon = convo.type === 'group' ? '👥' : '💬';
+                const label = convo.title || 'Chat';
+                btn.innerHTML = `<span class="item-icon">${icon}</span><span class="item-label">${label}</span><span class="item-close" title="Leave">✕</span>`;
+                btn.addEventListener('click', (e) => {
+                    if (e.target.closest('.item-close')) return;
+                    activateConvo(convo.convoId);
+                });
+                btn.querySelector('.item-close').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    closeConvo(convo.convoId);
+                });
+                chatConvoList.appendChild(btn);
+            });
+        }
+
+        function updateChatTitle(convo) {
+            const icon = convo.type === 'group' ? '👥' : '💬';
+            chatTitle.textContent = `${icon} ${convo.title || 'Chat'}`;
+            chatActions.hidden = false;
+            if (convo.type === 'group') {
+                groupCodeDisplay.hidden = false;
+                groupCodeText.textContent = convo.code || '••••••';
+                chatMembersBtn.hidden = false;
+                const names = convo.data?.memberNames || {};
+                const uids = convo.data?.memberUids || [];
+                const list = uids.map(u => names[u] || 'someone').join(', ');
+                chatMembersPanel.innerHTML = `<strong>${uids.length} members:</strong> ${list || '—'}`;
+                chatMembersPanel.hidden = false;
+            } else {
+                groupCodeDisplay.hidden = true;
+                chatMembersBtn.hidden = true;
+                chatMembersPanel.hidden = true;
+            }
+        }
+
+        function showGateView() {
+            if (unsubscribeMessages) { unsubscribeMessages(); unsubscribeMessages = null; }
+            activeConvoId = null;
+            chatRoom.classList.remove('active');
+            chatGate.hidden = false;
+            chatActions.hidden = true;
+            chatTitle.textContent = '💬 Select a chat';
+            chatMembersPanel.hidden = true;
+            renderConvos();
+        }
+
+        function activateConvo(convoId) {
+            const convo = conversations.find(c => c.convoId === convoId);
+            if (!convo) return;
+            activeConvoId = convoId;
+            if (unsubscribeMessages) { unsubscribeMessages(); unsubscribeMessages = null; }
+            chatGate.hidden = true;
+            chatRoom.classList.add('active');
+            chatMessages.innerHTML = '';
+            updateChatTitle(convo);
+            const ref = convo.type === 'group' ?
+                collection(db, 'groupChatRooms', convo.roomId, 'messages') :
+                collection(db, 'chatRooms', convo.roomId, 'messages');
+            const q = query(ref, orderBy('createdAt', 'desc'), limit(80));
+            unsubscribeMessages = onSnapshot(q, (snap) => {
+                const rows = [];
+                snap.forEach(d => rows.push(d.data()));
+                rows.reverse();
+                chatMessages.innerHTML = '';
+                rows.forEach(data => {
+                    const msg = document.createElement('div');
+                    const mine = data.uid === currentUid;
+                    msg.className = `chat-msg ${mine ? 'mine' : (data.type === 'system' ? 'system' : 'theirs')}`;
+                    if (data.type === 'system') {
+                        msg.textContent = data.text || '';
+                    } else {
+                        const who = document.createElement('span');
+                        who.className = 'msg-who';
+                        who.textContent = data.name || 'Guest';
+                        const text = document.createElement('span');
+                        text.textContent = data.text || '';
+                        const time = document.createElement('span');
+                        time.className = 'msg-time';
+                        time.textContent = data.createdAt?.toDate ? data.createdAt.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+                        msg.appendChild(who);
+                        msg.appendChild(text);
+                        msg.appendChild(time);
+                    }
+                    chatMessages.appendChild(msg);
+                });
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, (err) => console.error('Chat listener error', err));
+            renderConvos();
+        }
+
+        async function closeConvo(convoId) {
+            const convo = conversations.find(c => c.convoId === convoId);
+            if (!convo || !currentUid) return;
+            try {
+                if (convo.type === 'group') {
+                    await addDoc(collection(db, 'groupChatRooms', convo.roomId, 'messages'), {
+                        type: 'system',
+                        text: `${currentName} left the group`,
+                        createdAt: serverTimestamp()
+                    });
+                    await updateDoc(doc(db, 'groups', convo.roomId), {
+                        memberUids: arrayRemove(currentUid),
+                        [`memberNames.${currentUid}`]: deleteField()
+                    });
+                } else {
+                    await updateDoc(doc(db, 'chatRooms', convo.roomId), {
+                        participants: arrayRemove(currentUid),
+                        [`participantNames.${currentUid}`]: deleteField()
+                    });
+                }
+            } catch (err) { console.error('Leave failed', err); }
+            if (activeConvoId === convoId) showGateView();
+        }
+
+        async function sendMessage() {
+            const text = chatInput.value.trim();
+            const convo = conversations.find(c => c.convoId === activeConvoId);
+            if (!text || !currentUid || !convo) return;
+            chatSend.disabled = true;
+            try {
+                const ref = convo.type === 'group' ?
+                    collection(db, 'groupChatRooms', convo.roomId, 'messages') :
+                    collection(db, 'chatRooms', convo.roomId, 'messages');
+                await addDoc(ref, {
+                    text: text.slice(0, 200),
+                    name: currentName,
+                    uid: currentUid,
+                    type: 'text',
+                    createdAt: serverTimestamp()
+                });
+                const roomRef = doc(db, convo.type === 'group' ? 'groups' : 'chatRooms', convo.roomId);
+                await updateDoc(roomRef, {
+                    lastMessage: text.slice(0, 60),
+                    lastMessageFrom: currentName,
+                    lastMessageUid: currentUid,
+                    lastMessageAt: serverTimestamp()
+                });
+                chatInput.value = '';
+            } catch (err) { console.error('Send failed', err); }
+            chatSend.disabled = false;
+            chatInput.focus();
+        }
+        chatSend.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendMessage(); });
+        chatLeaveBtn.addEventListener('click', () => { if (activeConvoId) closeConvo(activeConvoId); });
+        chatMembersBtn.addEventListener('click', () => { chatMembersPanel.hidden = !chatMembersPanel.hidden; });
+        chatNewBtn.addEventListener('click', showGateView);
+
+        friendCodeGo.addEventListener('click', async () => {
+            if (!window.requireUsername()) return;
+            const code = friendCodeInput.value.trim().toUpperCase();
+            if (!code) return;
+            if (!currentUid) { chatGateHint.textContent = '⏳ Connecting...'; return; }
+            if (code === myCode) { chatGateHint.textContent = "❌ That's your own code!"; return; }
+            friendCodeGo.disabled = true;
+            chatGateHint.textContent = '🔍 Looking...';
+            try {
+                const codeSnap = await getDoc(doc(db, 'codes', code));
+                if (!codeSnap.exists()) { chatGateHint.textContent = "❌ Code not found"; return; }
+                const partnerUid = codeSnap.data().uid;
+                const partnerSnap = await getDoc(doc(db, 'players', partnerUid));
+                const partnerName = partnerSnap.exists() ? (partnerSnap.data().name || 'friend') : 'friend';
+                const roomId = roomIdFor(currentUid, partnerUid);
+                justOpenedConvoId = 'dm_' + roomId;
+                await setDoc(doc(db, 'chatRooms', roomId), {
+                    participants: arrayUnion(currentUid, partnerUid),
+                    [`participantNames.${currentUid}`]: currentName,
+                    [`participantNames.${partnerUid}`]: partnerName,
+                    updatedAt: serverTimestamp()
+                }, { merge: true });
+                chatGateHint.textContent = '✅ Connected!';
+                friendCodeInput.value = '';
+            } catch (err) {
+                console.error(err);
+                chatGateHint.textContent = '❌ Something went wrong';
+            }
+            friendCodeGo.disabled = false;
+        });
+        friendCodeInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') friendCodeGo.click(); });
+
+        createGroupBtn.addEventListener('click', async () => {
+            if (!window.requireUsername()) return;
+            if (!currentUid) { chatGateHint.textContent = '⏳ Connecting...'; return; }
+            createGroupBtn.disabled = true;
+            chatGateHint.textContent = '⏳ Creating...';
+            try {
+                const groupName = groupNameInput.value.trim() || 'Group';
+                const groupRef = doc(collection(db, 'groups'));
+                const groupId = groupRef.id;
+                let code = generateCode();
+                const check = await getDoc(doc(db, 'groupCodes', code));
+                if (check.exists()) code = generateCode();
+                justOpenedConvoId = 'group_' + groupId;
+                await setDoc(groupRef, {
+                    name: groupName,
+                    code,
+                    ownerUid: currentUid,
+                    memberUids: [currentUid],
+                    memberNames: { [currentUid]: currentName },
+                    createdAt: serverTimestamp()
+                });
+                await setDoc(doc(db, 'groupCodes', code), { groupId });
+                await addDoc(collection(db, 'groupChatRooms', groupId, 'messages'), {
+                    type: 'system',
+                    text: `${currentName} created the group`,
+                    createdAt: serverTimestamp()
+                });
+                chatGateHint.textContent = '✅ Group created!';
+                groupNameInput.value = '';
+            } catch (err) {
+                console.error(err);
+                chatGateHint.textContent = '❌ Failed to create';
+            }
+            createGroupBtn.disabled = false;
+        });
+        groupNameInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') createGroupBtn.click(); });
+
+        joinGroupBtn.addEventListener('click', async () => {
+            if (!window.requireUsername()) return;
+            const code = groupCodeInput.value.trim().toUpperCase();
+            if (!code) return;
+            if (!currentUid) { chatGateHint.textContent = '⏳ Connecting...'; return; }
+            joinGroupBtn.disabled = true;
+            chatGateHint.textContent = '🔍 Looking...';
+            try {
+                const codeSnap = await getDoc(doc(db, 'groupCodes', code));
+                if (!codeSnap.exists()) { chatGateHint.textContent = "❌ Code not found"; return; }
+                const groupId = codeSnap.data().groupId;
+                const groupSnap = await getDoc(doc(db, 'groups', groupId));
+                if (!groupSnap.exists()) { chatGateHint.textContent = "❌ Group doesn't exist"; return; }
+                const data = groupSnap.data();
+                const alreadyIn = data.memberUids?.includes(currentUid);
+                justOpenedConvoId = 'group_' + groupId;
+                if (!alreadyIn) {
+                    await updateDoc(doc(db, 'groups', groupId), {
+                        memberUids: arrayUnion(currentUid),
+                        [`memberNames.${currentUid}`]: currentName
+                    });
+                    await addDoc(collection(db, 'groupChatRooms', groupId, 'messages'), {
+                        type: 'system',
+                        text: `${currentName} joined the group`,
+                        createdAt: serverTimestamp()
+                    });
+                }
+                chatGateHint.textContent = '✅ Joined!';
+                groupCodeInput.value = '';
+            } catch (err) {
+                console.error(err);
+                chatGateHint.textContent = '❌ Failed to join';
+            }
+            joinGroupBtn.disabled = false;
+        });
+        groupCodeInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') joinGroupBtn.click(); });
+
+        // ===== AUTH =====
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) return;
+            currentUid = user.uid;
+            try {
+                const snap = await getDoc(doc(db, 'players', currentUid));
+                if (snap.exists()) {
+                    const data = snap.data();
+                    if (data.name) { currentName = data.name; usernameSet = true; showWelcome(data.name); }
+                    if (data.code) myCode = data.code;
+                }
+                if (!myCode) {
+                    myCode = generateCode();
+                    await setDoc(doc(db, 'players', currentUid), { code: myCode, updatedAt: serverTimestamp() }, { merge: true });
+                    await setDoc(doc(db, 'codes', myCode), { uid: currentUid });
+                }
+                myCodeEl.textContent = myCode;
+                myCodeGateEl.textContent = myCode;
+
+                try {
+                    const snapshot = await getCountFromServer(collection(db, 'players'));
+                    onlineCount.textContent = snapshot.data().count || '0';
+                } catch (e) { onlineCount.textContent = '?'; }
+
+                onSnapshot(query(collection(db, 'chatRooms'), where('participants', 'array-contains', currentUid)), (snap) => {
+                    snap.docChanges().forEach(change => {
+                        const roomId = change.doc.id;
+                        const data = change.doc.data();
+                        if (change.type === 'removed') { dmDocs.delete(roomId); return; }
+                        const isNew = !dmDocs.has(roomId);
+                        dmDocs.set(roomId, data);
+                        const convoId = 'dm_' + roomId;
+                        if (dmLoaded && isNew && convoId !== justOpenedConvoId) {
+                            const partnerUid = (data.participants || []).find(u => u !== currentUid);
+                            const partnerName = (data.participantNames && data.participantNames[partnerUid]) || 'someone';
+                            showNotification(`💬 New Chat`, `${partnerName} started a chat with you`, 'message');
+                        } else if (dmLoaded && !isNew && data.lastMessageUid && data.lastMessageUid !== currentUid) {
+                            if (activeConvoId !== convoId || document.getElementById('panel-chat').classList.contains('hidden')) {
+                                showNotification(`${data.lastMessageFrom || 'Someone'}`, `${data.lastMessage || 'sent a message'}`, 'message');
+                            }
+                        }
+                    });
+                    dmLoaded = true;
+                    if (justOpenedConvoId && justOpenedConvoId.startsWith('dm_') && dmDocs.has(justOpenedConvoId.slice(3))) {
+                        const id = justOpenedConvoId;
+                        justOpenedConvoId = null;
+                        rebuildConvos();
+                        window.switchTab('chat');
+                        activateConvo(id);
+                        return;
+                    }
+                    rebuildConvos();
+                }, (err) => console.error('DM sync error', err));
+
+                onSnapshot(query(collection(db, 'groups'), where('memberUids', 'array-contains', currentUid)), (snap) => {
+                    snap.docChanges().forEach(change => {
+                        const groupId = change.doc.id;
+                        const data = change.doc.data();
+                        if (change.type === 'removed') { groupDocs.delete(groupId); return; }
+                        const isNew = !groupDocs.has(groupId);
+                        const oldData = groupDocs.get(groupId);
+                        groupDocs.set(groupId, data);
+                        const convoId = 'group_' + groupId;
+                        if (groupLoaded && oldData) {
+                            const oldMembers = oldData.memberUids || [];
+                            const newMembers = data.memberUids || [];
+                            const joined = newMembers.filter(u => !oldMembers.includes(u));
+                            const left = oldMembers.filter(u => !newMembers.includes(u));
+                            const groupName = data.name || 'group';
+                            joined.forEach(uid => {
+                                if (uid !== currentUid) {
+                                    const name = data.memberNames?.[uid] || 'Someone';
+                                    showNotification(`👋 ${name} joined`, `${name} joined "${groupName}"`, 'join');
+                                }
+                            });
+                            left.forEach(uid => {
+                                if (uid !== currentUid) {
+                                    const name = oldData.memberNames?.[uid] || 'Someone';
+                                    showNotification(`🚪 ${name} left`, `${name} left "${groupName}"`, 'leave');
+                                }
+                            });
+                        }
+                        if (groupLoaded && !isNew && data.lastMessageUid && data.lastMessageUid !== currentUid) {
+                            if (activeConvoId !== convoId || document.getElementById('panel-chat').classList.contains('hidden')) {
+                                showNotification(`${data.lastMessageFrom || 'Someone'} in ${data.name || 'group'}`, `${data.lastMessage || 'sent a message'}`, 'message');
+                            }
+                        }
+                    });
+                    groupLoaded = true;
+                    if (justOpenedConvoId && justOpenedConvoId.startsWith('group_') && groupDocs.has(justOpenedConvoId.slice(6))) {
+                        const id = justOpenedConvoId;
+                        justOpenedConvoId = null;
+                        rebuildConvos();
+                        window.switchTab('chat');
+                        activateConvo(id);
+                        return;
+                    }
+                    rebuildConvos();
+                }, (err) => console.error('Group sync error', err));
+
+            } catch (err) { console.error('Profile error', err); }
+        });
+
+        signInAnonymously(auth).catch(err => console.error('Auth failed', err));
+
+        function rebuildConvos() {
+            const list = [];
+            dmDocs.forEach((data, roomId) => {
+                const partnerUid = (data.participants || []).find(u => u !== currentUid);
+                const title = (data.participantNames && partnerUid && data.participantNames[partnerUid]) || 'friend';
+                list.push({ convoId: 'dm_' + roomId, type: 'dm', roomId, title, data });
+            });
+            groupDocs.forEach((data, groupId) => {
+                list.push({ convoId: 'group_' + groupId, type: 'group', roomId: groupId, title: data.name || 'Group', code: data.code, data });
+            });
+            list.sort((a, b) => {
+                const at = a.data.lastMessageAt?.toMillis ? a.data.lastMessageAt.toMillis() : 0;
+                const bt = b.data.lastMessageAt?.toMillis ? b.data.lastMessageAt.toMillis() : 0;
+                return bt - at;
+            });
+            conversations = list;
+            renderConvos();
+            if (activeConvoId) {
+                const active = conversations.find(c => c.convoId === activeConvoId);
+                if (active) updateChatTitle(active);
+                else showGateView();
+            }
+        }
+        window.onChatOpened = function() {};
+
+        // ===== SEARCH / PROXY (GUST) =====
+        // 🔁 GUST public proxy URL
+        const PROXY_URL = 'https://gust.social/proxy';
+
+        const searchInput = document.getElementById('searchInput');
+        const searchGo = document.getElementById('searchGo');
+        const searchOpenTab = document.getElementById('searchOpenTab');
+        const searchFrame = document.getElementById('searchFrame');
+
+        function buildProxyUrl(query) {
+            let target = query.trim();
+            if (!target) return null;
+            // Auto-add https:// if it looks like a domain (has a dot and no spaces)
+            if (target.includes('.') && !/\s/.test(target) && !target.startsWith('http://') && !target.startsWith('https://')) {
+                target = 'https://' + target;
+            }
+            // If still not a URL, treat as search -> Google
+            if (!target.startsWith('http://') && !target.startsWith('https://')) {
+                target = `https://www.google.com/search?q=${encodeURIComponent(target)}`;
+            }
+            return `${PROXY_URL}?url=${encodeURIComponent(target)}`;
+        }
+
+        function performSearch() {
+            const url = buildProxyUrl(searchInput.value);
+            if (url) {
+                searchFrame.src = url;
+            }
+        }
+
+        function openInNewTab() {
+            const url = buildProxyUrl(searchInput.value);
+            if (url) {
+                window.open(url, '_blank');
+            }
+        }
+
+        searchGo.addEventListener('click', performSearch);
+        searchOpenTab.addEventListener('click', openInNewTab);
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                performSearch();
+            }
+        });
+
+        // ===== START EMOJIS =====
+        setTimeout(() => {
+            requestAnimationFrame(drawEmojis);
+        }, 300);
+
+        console.log('🚀 EAHaqual with GUST proxy loaded!');
     </script>
 </body>
 </html>
+<script src="https://jsdelivr.net"></script>
+<script>
+    // Force your search bar to use the proxy backend
+    const searchForm = document.querySelector('form') || document.getElementById('proxy-form');
+    const searchInput = document.querySelector('input[type="text"]') || document.getElementById('proxy-search');
+    
+    if (searchForm && searchInput) {
+        searchForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            let url = searchInput.value.trim();
+            if (!/^https?:\/\//i.test(url) && !url.includes('.')) {
+                url = 'https://google.com' + encodeURIComponent(url);
+            } else if (!/^https?:\/\//i.test(url)) {
+                url = 'http://' + url;
+            }
+            // Route through a public working bare network server gateway
+            window.location.href = 'https://onrender.com' + btoa(url);
+        });
+    }
+</script>
