@@ -524,12 +524,12 @@
             </div>
         </section>
 
-        <!-- SEARCH (corsproxy.io) -->
+        <!-- SEARCH (corsproxy.io with API key) -->
         <section class="panel" id="panel-search">
             <div class="search-section">
                 <div class="search-header">
                     <h2>🔍 Search the Web</h2>
-                    <p>Enter a URL or search term – it will be routed through a free proxy.</p>
+                    <p>Enter a URL or search term – it will be routed through corsproxy.io (API key enabled).</p>
                 </div>
                 <div class="search-box">
                     <input type="text" id="searchInput" placeholder="example.com or search term...">
@@ -1562,7 +1562,7 @@
         window.onChatOpened = function() {};
 
         // =============================================================
-        // ===== SEARCH WITH CORSPROXY.IO (FREE, NO API KEY) =====
+        // ===== SEARCH WITH CORSPROXY.IO (API KEY INCLUDED) =====
         // =============================================================
 
         const searchInput = document.getElementById('searchInput');
@@ -1570,8 +1570,8 @@
         const searchOpenTab = document.getElementById('searchOpenTab');
         const searchFrame = document.getElementById('searchFrame');
 
-        // corsproxy.io – free, no API key, works with iframes
-        const PROXY_URL = 'https://corsproxy.io/?url=';
+        // corsproxy.io with your API key
+        const PROXY_URL = 'https://corsproxy.io/?apiKey=b7591879&url=';
 
         function getTargetUrl(input) {
             let target = input.trim();
@@ -1615,7 +1615,7 @@
             requestAnimationFrame(drawEmojis);
         }, 300);
 
-        console.log('🚀 EAHaqual with corsproxy.io loaded.');
+        console.log('🚀 EAHaqual with corsproxy.io (API key enabled) loaded.');
     </script>
 </body>
 </html>
