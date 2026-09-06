@@ -1562,7 +1562,7 @@
         window.onChatOpened = function() {};
 
         // =============================================================
-        // ===== SEARCH WITH CORSPROXY.IO (API KEY INCLUDED) =====
+        // ===== SEARCH WITH CORSPROXY.IO (CORRECT API KEY) =====
         // =============================================================
 
         const searchInput = document.getElementById('searchInput');
@@ -1570,8 +1570,8 @@
         const searchOpenTab = document.getElementById('searchOpenTab');
         const searchFrame = document.getElementById('searchFrame');
 
-        // corsproxy.io with your API key
-        const PROXY_URL = 'https://corsproxy.io/?apiKey=b7591879&url=';
+        // CORRECT: using ?key= (not ?apiKey=)
+        const PROXY_URL = 'https://corsproxy.io/?key=b7591879&url=';
 
         function getTargetUrl(input) {
             let target = input.trim();
@@ -1615,7 +1615,7 @@
             requestAnimationFrame(drawEmojis);
         }, 300);
 
-        console.log('🚀 EAHaqual with corsproxy.io (API key enabled) loaded.');
+        console.log('🚀 EAHaqual with corsproxy.io (key parameter) loaded.');
     </script>
 </body>
 </html>
